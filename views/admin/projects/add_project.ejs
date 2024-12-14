@@ -1,0 +1,306 @@
+<%- include('../../layout/header') %>
+<style>
+  .infor-staff:hover {
+    opacity: 0.7;
+    background-color: rgb(45, 145, 227);
+    color: white;
+  }
+
+  .infor-staff {
+    border-bottom: 0.5px solid rgb(77, 211, 229);
+  }
+
+  #itemList {
+    display: none;
+  }
+</style>
+<h2 class=" m-b-30">Tạo mới dự án</h2>
+<form action="/project" method="POST" id="FormAdd">
+  <div class="d-flex justify-content-between m-t-15 m-b-15">
+    <div class="col-lg-7">
+      <section class="card">
+        <div class="card-body text-secondary">
+          <div class="form-group">
+            <label for="full_name ">Tên khách hàng <span style="color: red;">*</span></label>
+            <input type="text" id="full_name" name="full_name" class="form-control" required maxlength="255">
+          </div>
+          <div class="form-group">
+            <label for="number_phone">Số điện thoại <span style="color: red;">*</span></label>
+            <input type="tel" id="number_phone" name="number_phone" class="form-control" required maxlength="15">
+          </div>
+          <div class="form-group">
+            <label for="email">Địa chỉ email</label>
+            <input type="email" id="email" name="email" class="form-control" maxlength="255">
+          </div>
+          <div class="form-group">
+            <label for="address">Địa chỉ lắp đặt <span style="color: red;">*</span></label>
+            <textarea id="address" name="address" class="form-control"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="description">Ghi chú</label>
+            <textarea id="description" name="description" class="form-control" maxlength="225"></textarea>
+          </div>
+         <h3>Thông tin</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Thông tin</th>
+      <th scope="col">Giá trị</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><label for="dongCo">Động cơ <span style="font-size: 10px;">(Nhật Bản)</span></label></td>
+      <td><input type="text" id="dongCo" name="dongCo" class="form-control"></td>
+    </tr>
+    <tr>
+      <td><label for="tuDien">Tủ điện <span style="font-size: 10px;">(Hàn Quốc)</span></label></td>
+      <td><input type="text" id="tuDien" name="tuDien" class="form-control"></td>
+    </tr>
+    <tr>
+      <td><label for="capTai">Cáp Tải <span style="font-size: 10px;">(Hàn Quốc)</span></label></td>
+      <td><input type="text" id="capTai" name="capTai" class="form-control"></td>
+    </tr>
+    <tr>
+      <td><label for="congSuat">Công suất <span style="font-size: 10px;">(3.3 Kw)</span></label></td>
+      <td><input type="text" id="congSuat" name="congSuat" class="form-control"></td>
+    </tr>
+    <tr>
+      <td><label for="hoThang">Hố thang <span style="font-size: 10px;">(1600x 1600 mm)</span></label></td>
+      <td><input type="text" id="hoThang" name="hoThang" class="form-control"></td>
+    </tr>
+    <tr>
+      <td><label for="cabin">Cabin <span style="font-size: 10px;">(1200 x 1000 mm)</span></label></td>
+      <td><input type="text" id="cabin" name="cabin" class="form-control"></td>
+    </tr>
+    <tr>
+      <td><label for="cua">Cửa <span style="font-size: 10px;">(700 x 2100 mm)</span></label></td>
+      <td><input type="text" id="cua" name="cua" class="form-control"></td>
+    </tr>
+    <tr>
+      <td><label for="pit">Pít <span style="font-size: 10px;">(1400 mm)</span></label></td>
+      <td><input type="text" id="pit" name="pit" class="form-control"></td>
+    </tr>
+    <tr>
+      <td><label for="oh">OH <span style="font-size: 10px;">(3300 + 1300 mm)</span></label></td>
+      <td><input type="text" id="oh" name="oh" class="form-control"></td>
+    </tr>
+    <tr>
+      <td><label for="baoHanh">Bảo hành <span style="font-size: 10px;">tháng</span></label></td>
+      <td><input type="text" id="baoHanh" name="baoHanh" class="form-control"></td>
+    </tr>
+    <tr>
+      <td><label for="baoTri">Bảo trì <span style="font-size: 10px;">tháng</span></label></td>
+      <td><input type="text" id="baoTri" name="baoTri" class="form-control"></td>
+    </tr>
+  </tbody>
+</table>
+
+        </div>
+      </section>
+    </div>
+    <div class="col-lg-5">
+      <section class="card">
+        <div class="card-body text-secondary">
+          <div class="form-group">
+            <label for="workflow">Chọn quy trình lắp đặt <span style="color: red;">*</span></label>
+            <select id="workflow" name="workflow" class="form-control m-b-30" required>
+              <option disabled selected>
+                Chọn quy trình
+              </option>
+              <% workflows.forEach(function(workflow, key) { %>
+              <option value="<%= workflow.id %>">
+                <%= workflow.name %>
+              </option>
+              <% }) %>
+            </select>
+            <% workflowSteps.forEach(function(workflowStep) { %>
+            <div class="step step<%= workflowStep.workflow.id %> m-t-30">
+              <div class="d-flex justify-content-between btn btn-success btn-lg btn-block m-b-15 ">
+                <span style="text-align: start;">
+                  <%= workflowStep.step.name %>
+                  <br>
+                  <span style="opacity: 0.5;">
+                    <%= workflowStep.step.description %>
+                  </span>
+                </span>
+                <div>
+                  <div style="text-align: end;"><i class="fas fa-plus-square add-new-position" idValue="<%= workflowStep.id %>" nameValue="
+                  <%= workflowStep.step.name %>"></i>&nbsp;</div>
+                  <div id="imgStep<%= workflowStep.id %>" class="imgStep">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+      </section>
+    </div>
+  </div>
+  <button class="btn btn-success btn-lg btn-block" onclick="SubmitForm(event)">Tạo mới
+    dự án</button>
+</form>
+<script>
+  function changeDate() {
+    if ($('#date-time').val() != '') {
+      $('#staff-search').prop('disabled', false);
+    } else {
+      $('#staff-search').prop('disabled', true);
+    }
+  }
+
+  function SubmitForm(e) {
+    e.preventDefault()
+    $('#FormAdd input[name="steps"]').remove();
+    const jsonString = JSON.stringify(ArrayObj, (key, value) => {
+      if (key === 'img') {
+        return undefined;
+      }
+      return value;
+    });
+    console.log(jsonString)
+    $('#FormAdd').append(`<input type="text" name="steps" value='${jsonString}'>`)
+    document.getElementById("FormAdd").submit();
+  }
+
+  function pushStaff(value, id, avatar) {
+    if ($('#date-time').val() != '') {
+      $('.clickXN').prop('disabled', false);
+      $('#imgStaff').attr('value', avatar);
+      $('#idStaffCheck').attr('value', id);
+    } else {
+      $('.clickXN').prop('disabled', true);
+    }
+    document.getElementById('staff-search').value = value;
+    document.getElementById('itemList').style.display = "none";
+  }
+
+  function filterList() {
+    document.getElementById('itemList').style.display = "block"
+    var input = document.getElementById('staff-search').value.toLowerCase();
+    var items = document.getElementById('itemList').getElementsByTagName('li');
+    var list = document.getElementById('itemList');
+    if (input) {
+      list.style.display = "block";
+    } else {
+      list.style.display = "none";
+    }
+    for (var i = 0; i < items.length; i++) {
+      var itemText = items[i].textContent || items[i].innerText;
+      var dataId = $(items[i]).attr('data-id');
+      var stepId = $(items[i]).attr('data-stepId');
+      console.log(ArrayObj)
+      if (itemText.toLowerCase().includes(input)) {
+        items[i].style.display = "";
+        ArrayObj.forEach(function(item) {
+          if (item.idStaffCheck == dataId && item.idStep == stepId) {
+            return items[i].style.display = "none";
+          }
+        })
+      } else {
+        items[i].style.display = "none";
+      }
+    }
+  }
+  $(document).ready(function() {
+    $(".step").slideUp();
+    $("#workflow").change(function(e) {
+      const workflowId = e.target.value;
+      $(".step").slideUp();
+      $(`.step${workflowId}`).slideDown();
+    });
+    $('.add-new-position').click(function() {
+      $('#newPositionModal').remove();
+      var idValue = $(this).attr('idValue');
+      var nameValue = $(this).attr('nameValue');
+      var form =
+        '<div class="modal fade" id="newPositionModal" tabindex="-1" aria-labelledby="newPositionModalLabel" aria-hidden="true">' +
+        '<div class="modal-dialog">' +
+        '<div class="modal-content">' +
+        '<div class="modal-header">' +
+        '<div class="d-flex justify-content-between w-100" >' +
+        `<h5 class="modal-title" id="newPositionModalLabel">Cài đặt quy trình ${nameValue}</h5>
+        <input type="hidden" value="${idValue}" id="idSteps">
+        <input type="hidden"  id="imgStaff">
+        <input type="hidden"  id="idStaffCheck">
+        ` +
+        '<button class="btn btn-success clickXN" disable onclick="clickXN()" disabled>Xác nhận</button>' +
+        '</div>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<div >' +
+        '<div class="form-group">' +
+        '<label for="date-time">Chọn thời gian hết hạn:</label>' +
+        '<input type="datetime-local" class="form-control" id="date-time" name="date-time" onchange="changeDate()">' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="staff">Thêm nhân viên:</label>' +
+        '<input disabled type="text" class="form-control" id="staff-search"  oninput="filterList()">' +
+        `<ul id="itemList">
+  <% staffs.forEach(function(staff) { %>
+        <li class="btn w-100 infor-staff" data-stepId="${idValue}" data-id="<%=staff.id%>" onclick="pushStaff('<%=staff.full_name%>','<%=staff.id%>','<%=staff.avatar%>')"><%=staff.full_name%> - <%=staff.number_phone%></li>
+        <% }) %>
+</ul>`
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</form>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>';
+      $('body').append(form);
+      $('#newPositionModal').modal('show');
+      $('#date-time').val('');
+      $('#staff-search').val('');
+    });
+  });
+
+  let ArrayObj = [];
+
+  function clickXN() {
+    ArrayObj.push(new Step(
+      $('#idStaffCheck').val(),
+      $('#idSteps').val(),
+      $('#imgStaff').val(),
+      $('#date-time').val()
+    ))
+    $(`.imgStep`).find('img').remove();
+    ArrayObj.forEach(element => {
+      $(`#imgStep${element.idStep}`).append(
+        `<img src="/images/avatar/${element.img}" alt="" width="30px" height="30px" style="border-radius: 100%; margin-right:5px" onclick="remove('${element.img}','${element.idStep}')">`
+      )
+    });
+    $('#newPositionModal').modal('hide');
+  }
+  // XỬ LÝ OBJ
+  function Step(idStaffCheck, idStep, img, date) {
+    this.img = img;
+    this.date = date;
+    this.idStaffCheck = idStaffCheck;
+    this.idStep = idStep;
+    this.getImg = function() {
+      return this.img
+    };
+    this.getDate = function() {
+      return this.date
+    };
+    this.getId = function() {
+      return this.id
+    };
+  }
+
+  function remove(img, idStep) {
+    ArrayObj = ArrayObj.filter(function(item) {
+      return item.img != img || item.idStep != idStep
+    });
+    $(`.imgStep`).find('img').remove();
+    ArrayObj.forEach(element => {
+      $(`#imgStep${element.idStep}`).append(
+        `<img src="/images/avatar/${element.img}" alt="" width="30px" height="30px" style="border-radius: 100%; margin-right:5px" onclick="remove('${element.img}','${element.idStep}')"> `
+      )
+    });
+  }
+</script>
+
+<%- include('../../layout/footer') %>

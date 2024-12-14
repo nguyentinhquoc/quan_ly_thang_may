@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+}
+
+.timeline {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.timeline-event {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.timeline-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  font-size: 20px;
+  margin-right: 20px;
+}
+.timeline-icon-none {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #aea0a0;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.timeline-content {
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  flex: 1;
+}
+
+.timeline-date {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.timeline-description {
+  margin-bottom: 0;
+}
+
+.btn-complete {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+    </style>
+</head>
+<body>
+<div class="timeline">
+  <div class="timeline-event">
+    <div class="timeline-icon">✔</div>
+    <div class="timeline-content">
+      <div class="timeline-date">01/08/2024 15:00</div>
+      <div class="timeline-description">Tiếp nhận yêu cầu</div>
+    </div>
+  </div>
+  <div class="timeline-event">
+    <div class="timeline-icon">✔</div>
+    <div class="timeline-content">
+      <div class="timeline-date">01/08/2024 15:05</div>
+      <div class="timeline-description">
+        <div>Hoàng Sơn</div>
+        <div>Đã khắc phục xong lỗi không nhận diện khuôn mặt</div>
+      </div>
+    </div>
+  </div>
+  <div class="timeline-event">
+    <div class="timeline-icon-none"></div>
+    <div class="timeline-content">
+      <div class="timeline-date">01/08/2024 16:00</div>
+      <div class="timeline-description">Sự kiện khác</div>
+    </div>
+  </div>
+</div>
+<button class="btn-complete">Hoàn tất</button>
+</body>
+</html>

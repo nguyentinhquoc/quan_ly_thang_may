@@ -1,0 +1,159 @@
+<%- include('../layout/header') %>
+<h2 class="m-b-30">Chi tiết dự án</h2>
+<% function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+} %>
+
+<!-- MAIN CONTENT-->
+<div class="row m-t-25">
+  <div class="col-sm-6 col-lg-3">
+    <div class="overview-item overview-item--c1">
+      <div class="overview__inner">
+        <div class="overview-box clearfix">
+          <div class="icon">
+            <i class="zmdi zmdi-account-o"></i>
+          </div>
+          <div class="text">
+            <h2>10368</h2>
+            <span>members online</span>
+          </div>
+        </div>
+        <div class="overview-chart">
+          <canvas id="widgetChart1"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="overview-item overview-item--c2">
+      <div class="overview__inner">
+        <div class="overview-box clearfix">
+          <div class="icon">
+            <i class="zmdi zmdi-shopping-cart"></i>
+          </div>
+          <div class="text">
+            <h2>388,688</h2>
+            <span>items solid</span>
+          </div>
+        </div>
+        <div class="overview-chart">
+          <canvas id="widgetChart2"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="overview-item overview-item--c3">
+      <div class="overview__inner">
+        <div class="overview-box clearfix">
+          <div class="icon">
+            <i class="zmdi zmdi-calendar-note"></i>
+          </div>
+          <div class="text">
+            <h2>1,086</h2>
+            <span>this week</span>
+          </div>
+        </div>
+        <div class="overview-chart">
+          <canvas id="widgetChart3"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="overview-item overview-item--c4">
+      <div class="overview__inner">
+        <div class="overview-box clearfix">
+          <div class="icon">
+            <i class="zmdi zmdi-money"></i>
+          </div>
+          <div class="text">
+            <h2>$1,060,386</h2>
+            <span>total earnings</span>
+          </div>
+        </div>
+        <div class="overview-chart">
+          <canvas id="widgetChart4"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
+      <div class="au-card-title" style="background-image:url('images/bg-title-01.jpg');">
+        <div class="bg-overlay bg-overlay--blue"></div>
+        <h3>
+          <i class="zmdi zmdi-account-calendar"></i>Yêu cầu cập nhập dự liệu
+        </h3>
+      </div>
+      <div class="au-task js-list-load">
+        <div class="au-task__title">
+          <p>Danh sách yêu cầu cập nhập thông tin công trình</p>
+        </div>
+        <div class="au-task-list js-scrollbar3" style="height: 700px;">
+          <% projectEdits.forEach(function(projectEdit, index) { %>
+          <a href="project/checkEdit/<%= projectEdit.id %>" class="w-100 mb-3">
+            <div class="au-task__item au-task__item--danger w-100">
+              <div class="au-task__item-inner">
+                <h5 class="task mb-3">
+                  Công trình: <%= projectEdit.project.full_name %>
+                </h5>
+                <div class="d-flex justify-content-between">
+                  <span class="time">Người đề xuất: <%= projectEdit.staff.full_name %></span>
+                  <span><%= formatDate(projectEdit.createdAt) %></span>
+                </div>
+              </div>
+            </div>
+          </a>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
+      <div class="au-card-title" style="background-image:url('images/bg-title-01.jpg');">
+        <div class="bg-overlay bg-overlay--blue"></div>
+        <h3>
+          <i class="zmdi zmdi-account-calendar"></i>Thông báo bảo trì
+        </h3>
+      </div>
+      <div class="au-task js-list-load">
+        <div class="au-task__title">
+          <p>Danh sách nhưng công trình cần bảo trì định kì</p>
+        </div>
+        <div class="au-task-list js-scrollbar3" style="height: 700px;">
+          <% projectEdits.forEach(function(projectEdit, index) { %>
+          <a href="project/checkEdit/<%= projectEdit.id %>" class="w-100 mb-3">
+            <div class="au-task__item au-task__item--danger w-100">
+              <div class="au-task__item-inner">
+                <h5 class="task mb-3">
+                  Công trình: <%= projectEdit.project.full_name %>
+                </h5>
+                <div class="d-flex justify-content-between">
+                  <span class="time">Người đề xuất: <%= projectEdit.staff.full_name %></span>
+                  <span><%= formatDate(projectEdit.createdAt) %></span>
+                </div>
+              </div>
+            </div>
+          </a>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<!-- END MAIN CONTENT-->
+<!-- END PAGE CONTAINER-->
+<%- include('../layout/footer') %>

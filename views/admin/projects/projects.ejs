@@ -1,0 +1,57 @@
+<%- include('../../layout/header') %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="m-b-30">
+      <a href="project/add" type="button" class="btn btn-primary" id="add-new-project"> <i
+          class="fas fa-plus-square"></i>&nbsp; Thêm mới</a>
+    </div>
+    <div class="table-responsive table-responsive-data2">
+      <table class="table table-data2">
+        <thead style="background-color: rgb(158, 193, 224);">
+          <tr>
+            <th>STT</th>
+            <th>Mã dự án</th>
+            <th>Tên khách hàng</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Trạng thái</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% projects.forEach(function(project, key) { %>
+          <tr class="tr-shadow" data-id="<%= project.id %>"
+            data-name="<%= project.name %>" data-description="<%= project.description %>">
+            <td><%= key + 1 %></td>
+            <td><%= project.id %></td>
+            <td><span class="block-email"><%= project.full_name %></span></td>
+            <td class="desc"><%= project.number_phone %></td>
+            <td class="desc"><%= project.address %></td>
+            <td class="desc"><%= project.status == 0 ? 'Đang trong quá trình' : 'Đã xong' %></td>
+            <td>
+              <div class="table-data-feature">
+                <a href="/project/<%= project.id %>" class="item edit-btn"
+                  data-toggle="tooltip" data-placement="top" title="Edit">
+                  <i class="zmdi zmdi-edit"></i>
+                </a>
+                <a href="/project/detail/<%= project.id %>" class="item"
+                  data-toggle="tooltip" data-placement="top" title
+                  data-original-title="Chi tiết">
+                  <i class="fas fa-info-circle"></i>
+                </a>
+                <button class="item" data-toggle="tooltip" data-placement="top"
+                  title="Delete">
+                  <i class="zmdi zmdi-delete"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr class="spacer"></tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%- include('../../layout/footer') %>

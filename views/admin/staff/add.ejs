@@ -1,0 +1,160 @@
+<%- include('../../layout/header') %>
+<style>
+  /* Đặt kích thước và kiểu cho avatar */
+  .avatar-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .avatar-label {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+  }
+
+  .avatar-input {
+    display: none;
+  }
+
+  .avatar-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: rgb(87, 141, 255);
+  }
+
+  .avatar-label::before {
+    content: '+';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+  }
+
+  .avatar-label:hover::before {
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Đổi màu khi hover */
+  }
+</style>
+<div class="row">
+  <div class="col-md-12">
+
+    <div class="card">
+      <div class="card-header">Thêm mới nhân viên</div>
+      <div class="card-body">
+        <div class="card-title">
+          <h3 class="text-center title-2">Thêm mới nhân viên</h3>
+        </div>
+        <hr>
+        <form method="post" novalidate="novalidate" enctype="multipart/form-data">
+          <div class="form-group">
+            <div class="avatar-container">
+              <label for="avatar" class="avatar-label">
+                <input id="avatar" name="file" type="file" class="avatar-input" accept="image/*">
+                <img id="avatarPreview" class="avatar-preview" src="" >
+              </label>
+            </div>
+            <label for="full_name" class="control-label mb-1">Họ và tên</label>
+            <input id="full_name" name="full_name" type="text" class="form-control" aria-required="true" aria-invalid="false" value="" required>
+          </div>
+          <div class="d-flex justify-content-between">
+            <div class="form-group w-50">
+              <label for="department" class="control-label mb-1">Phòng ban</label>
+              <select id="department" name="department" class="form-control">
+                <% departmens.forEach(function(departmen) { %>
+                <option value="<%= departmen.id %>"><%= departmen.name %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="form-group w-25">
+              <label for="position" class="control-label mb-1">Vị trí</label>
+              <select id="position" name="position" class="form-control">
+                <% positions.forEach(function(position) { %>
+                <option value="<%= position.id %>"><%= position.name %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="number_phone" class="control-label mb-1">Số điện thoại</label>
+            <input id="number_phone" name="number_phone" type="tel" class="form-control" aria-required="true" aria-invalid="false" value="">
+          </div>
+          <div class="form-group">
+            <label for="email" class="control-label mb-1">Email</label>
+            <input id="email" name="email" type="email" class="form-control" aria-required="true" aria-invalid="false" value="">
+          </div>
+          <div class="form-group">
+            <label for="address" class="control-label mb-1">Địa chỉ</label>
+            <textarea id="address" name="address" class="form-control" aria-required="false" aria-invalid="false"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="description" class="control-label mb-1">Mô tả</label>
+            <textarea id="description" name="description" class="form-control" aria-required="false" aria-invalid="false"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="password" class="control-label mb-1">Mật khẩu</label>
+            <input id="password" name="password" type="password" class="form-control" aria-required="true" aria-invalid="false" value="">
+          </div>
+          <div>
+            <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+              <i class="fa fa-lock fa-lg"></i>&nbsp;
+              <span id="payment-button-amount">Thêm mới nhân viên</span>
+              <span id="payment-button-sending" style="display:none;">Sending…</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.getElementById('avatar').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const avatarPreview = document.getElementById('avatarPreview');
+        avatarPreview.src = e.target.result; // Set ảnh đã chọn làm hình nền preview
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+
+  $('.delete-btn').click(function() {
+    if (confirm('Bạn có chắc chắn muốn xóa phòng ban này không?')) {
+      var row = $(this).closest('tr');
+      var id = row.data('id');
+      $.ajax({
+        url: '/staffs',
+        data: {
+          id: id
+        },
+        type: 'DELETE',
+        success: function(response) {
+          row.remove();
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+        }
+      });
+    }
+  });
+</script>
+<%- include('../../layout/footer') %>

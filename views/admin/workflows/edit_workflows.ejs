@@ -1,0 +1,134 @@
+<%- include('../../layout/header') %>
+<style>
+  .hidden {
+    display: none;
+  }
+
+  .placeholder {
+    opacity: 0.5;
+    background-color: rgb(0, 165, 248);
+    list-style-type: none;
+    height: 2px;
+    margin-bottom: 15px;
+  }
+
+  .empty-message {
+    height: 30px;
+  }
+</style>
+<div class="row item-list">
+  <div class="col-lg-4">
+    <section class="card p-3">
+      <h5>Các bước nhỏ chưa dùng</h5>
+      <div class="d-flex justify-content-between m-t-15 m-b-15">
+        <div></div>
+        <button type="button" class="btn btn-primary" id="add-new-position">
+          <i class="fas fa-plus-square"></i>&nbsp; Thêm bước
+        </button>
+      </div>
+      <ul id="unused-items">
+        <% NonePickerIn.forEach(function(step) { %>
+        <li class="card-body text-light m-b-15 btn-primary" draggable="true"><input type="hidden" name="listStep[]" value="<%= step.id %>"> <%= step.name %><br> <span style="opacity: 0.5;"> <%= step.description %></span></li>
+        <% }); %>
+      </ul>
+    </section>
+  </div>
+  <div class="col-lg-8">
+    <form action="?_method=PATCH" method="post">
+      <section class="card p-3">
+        <div class="card-body text-secondary">
+          <ul id="used-items">
+            <h5> Quy trình hiện tại: </h5>
+            <li style="height: 30px; list-style: none;"></li>
+            <% PickerIn.forEach(function(step) { %>
+            <li class="card-body text-light m-b-15 btn-primary" draggable="true"><input type="hidden" name="listStep[]" value="<%= step.id %>"> <%= step.name %> <br> <span style="opacity: 0.5;"> <%= step.description %></span></li>
+            <% }); %>
+            <li class="card-body text-light m-b-15 empty-message"></li>
+          </ul>
+          <div class="d-flex justify-content-between m-t-15 m-b-15">
+            <div></div>
+            <div>
+              <p class="btn btn-danger " onclick="window.location.reload();">Đặt lại</p>
+              <input class="btn btn-info " type="submit" value="Lưu quy trình" id="save-workflow" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+  </div>
+</div>
+<script>
+  $(document).ready(function() {
+    // Hiển thị modal thêm mới
+    $('#add-new-position').click(function() {
+      var form =
+        '<div class="modal fade" id="newStepsModal" tabindex="-1" aria-labelledby="newStepsModalLabel" aria-hidden="true">' +
+        '<div class="modal-dialog">' +
+        '<div class="modal-content">' +
+        '<div class="modal-header">' +
+        '<h5 class="modal-title" id="newStepsModalLabel">Thêm mới bước nhỏ</h5>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<form action="/steps" method="post">' +
+        '<div class="form-group">' +
+        '<label for="name">Tên bước nhỏ:</label>' +
+        '<input type="text" class="form-control" id="name" name="name">' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="description">Mô tả:</label>' +
+        '<textarea class="form-control" id="description" name="description"></textarea>' +
+        '</div>' +
+        '<button type="submit" class="btn btn-primary">Thêm mới</button>' +
+        '</form>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+      // Thêm form vào body
+      $('body').append(form);
+      // Hiển thị modal
+      $('#newStepsModal').modal('show');
+    });
+
+    // Hiển thị modal chỉnh sửa khi click vào nút "Edit"
+    $('.edit-btn').click(function() {
+      // Lấy thông tin từ dòng được chọn
+      var row = $(this).closest('tr');
+      var id = row.data('id');
+      var name = row.data('name');
+      var description = row.data('description');
+
+      // Tạo form chỉnh sửa động với dữ liệu từ dòng
+      var editForm =
+        '<div class="modal fade" id="editStepsModal" tabindex="-1" aria-labelledby="editStepsModalLabel" aria-hidden="true">' +
+        '<div class="modal-dialog">' +
+        '<div class="modal-content">' +
+        '<div class="modal-header">' +
+        '<h5 class="modal-title" id="editStepsModalLabel">Chỉnh sửa bước nhỏ</h5>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<form action="/steps?_method=PATCH" method="POST" id="edit-position-form">' +
+        '<input type="hidden" name="id" id="edit-id" value="' + id + '">' +
+        '<div class="form-group">' +
+        '<label for="edit-name">Tên bước nhỏ:</label>' +
+        '<input type="text" class="form-control" id="edit-name" name="name" value="' + name + '" required>' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="edit-description">Mô tả:</label>' +
+        '<textarea class="form-control" id="edit-description" name="description">' + description + '</textarea>' +
+        '</div>' +
+        '<button type="submit" class="btn btn-primary">Lưu thay đổi</button>' +
+        '</form>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+      $('body').append(editForm);
+      $('#editStepsModal').modal('show');
+    });
+  });
+</script>
+<script src="/js/keo-tha.js"></script>
+<%- include('../../layout/footer') %>

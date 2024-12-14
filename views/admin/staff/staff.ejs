@@ -1,0 +1,66 @@
+<%- include('../../layout/header') %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="m-b-30">
+      <a href="/staffs/add" type="button" class="btn btn-primary" id="add-new-position"> <i class="fas fa-plus-square"></i>&nbsp; Thêm mới</a>
+    </div>
+ <div class="table-responsive table--no-card m-b-30">
+      <table class="table table-borderless table-data3">
+        <thead >
+          <tr>
+            <th>STT</th>
+            <th>Họ và tên</th>
+            <th>Số điện thoại</th>
+            <th>Email</th>
+            <th>Trạng thái</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% staffs.forEach(function(staff, key) { %>
+          <tr class="tr-shadow" data-id="<%= staff.id %>" data-name="<%= staff.name %>" data-description="<%= staff.description %>">
+            <td><%= key + 1 %></td>
+            <td><span class="block-email"> <img src="/images/avatar/<%= staff.avatar %>" alt="" width="30px" height="30px" style="border-radius: 50%; height: 50px;" > <%= staff.full_name %></span></td>
+            <td class="desc"><%= staff.number_phone  %></td>
+            <td class="desc"><%= staff.email %></td>
+            <td class="desc"><%= staff.status   %></td>
+            <td>
+              <div class="table-data-feature">
+                <!-- Nút Edit để kích hoạt Modal -->
+                <button class="item edit-btn" data-toggle="tooltip" data-placement="top" title="Edit">
+                  <i class="zmdi zmdi-edit"></i>
+                   <button class="item delete-btn" data-toggle="tooltip" data-placement="top" title="Delete">
+                  <i class="zmdi zmdi-delete"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr class="spacer"></tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  $('.delete-btn').click(function() {
+      if (confirm('Bạn có chắc chắn muốn xóa nhân viên này không?')) {
+        var row = $(this).closest('tr');
+        var id = row.data('id');
+        $.ajax({
+          url: '/staffs',
+          data: {
+            id: id
+          },
+          type: 'DELETE',
+          success: function(response) {
+            row.remove();
+          },
+          error: function(xhr, status, error) {
+            console.log(error);
+          }
+        });
+      }
+    });
+</script>
+<%- include('../../layout/footer') %>

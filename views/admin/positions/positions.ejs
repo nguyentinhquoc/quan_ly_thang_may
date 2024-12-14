@@ -1,0 +1,139 @@
+<%- include('../../layout/header') %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="m-b-30">
+      <button type="button" class="btn btn-primary" id="add-new-position"> <i class="fas fa-plus-square"></i>&nbsp; Thêm mới</button>
+    </div>
+    <div class="table-responsive table--no-card m-b-30">
+      <table class="table table-borderless table-data3">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Tên chức vụ</th>
+            <th>Mô tả</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% positions.forEach(function(position, key) { %>
+          <tr class="tr-shadow" data-id="<%= position.id %>" data-name="<%= position.name %>" data-description="<%= position.description %>">
+            <td><%= key + 1 %></td>
+            <td><span class="block-email"><%= position.name %></span></td>
+            <td class="desc"><%= position.description %></td>
+            <td>
+              <div class="table-data-feature">
+                <!-- Nút Edit để kích hoạt Modal -->
+                <button class="item edit-btn" data-toggle="tooltip" data-placement="top" title="Edit">
+                  <i class="zmdi zmdi-edit"></i>
+                </button>
+                <button class="item delete-btn" data-toggle="tooltip" data-placement="top" title="Delete">
+                  <i class="zmdi zmdi-delete"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr class="spacer"></tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('.delete-btn').click(function() {
+      if (confirm('Bạn có chắc chắn muốn xóa phòng ban này không?')) {
+
+        var row = $(this).closest('tr');
+        var id = row.data('id');
+        $.ajax({
+          url: '/positions',
+          data: {
+            id: id
+          },
+          type: 'DELETE',
+          success: function(response) {
+            row.remove();
+          },
+          error: function(xhr, status, error) {
+            console.log(error);
+          }
+        });
+      }
+    });
+    // Hiển thị modal thêm mới
+    $('#add-new-position').click(function() {
+      var form =
+        '<div class="modal fade" id="newPositionModal" tabindex="-1" aria-labelledby="newPositionModalLabel" aria-hidden="true">' +
+        '<div class="modal-dialog">' +
+        '<div class="modal-content">' +
+        '<div class="modal-header">' +
+        '<h5 class="modal-title" id="newPositionModalLabel">Thêm mới chức vụ</h5>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<form action="/positions" method="post">' +
+        '<div class="form-group">' +
+        '<label for="name">Tên chức vụ:</label>' +
+        '<input type="text" class="form-control" id="name" name="name">' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="description">Mô tả:</label>' +
+        '<textarea class="form-control" id="description" name="description"></textarea>' +
+        '</div>' +
+        '<button type="submit" class="btn btn-primary">Thêm mới</button>' +
+        '</form>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+      // Thêm form vào body
+      $('body').append(form);
+      // Hiển thị modal
+      $('#newPositionModal').modal('show');
+    });
+
+    // Hiển thị modal chỉnh sửa khi click vào nút "Edit"
+    $('.edit-btn').click(function() {
+      // Lấy thông tin từ dòng được chọn
+      var row = $(this).closest('tr');
+      var id = row.data('id');
+      var name = row.data('name');
+      var description = row.data('description');
+
+      // Tạo form chỉnh sửa động với dữ liệu từ dòng
+      var editForm =
+        '<div class="modal fade" id="editPositionModal" tabindex="-1" aria-labelledby="editPositionModalLabel" aria-hidden="true">' +
+        '<div class="modal-dialog">' +
+        '<div class="modal-content">' +
+        '<div class="modal-header">' +
+        '<h5 class="modal-title" id="editPositionModalLabel">Chỉnh sửa chức vụ</h5>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<form action="/positions?_method=PATCH" method="POST" id="edit-position-form">' +
+        '<input type="hidden" name="id" id="edit-id" value="' + id + '">' +
+        '<div class="form-group">' +
+        '<label for="edit-name">Tên chức vụ:</label>' +
+        '<input type="text" class="form-control" id="edit-name" name="name" value="' + name + '" required>' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="edit-description">Mô tả:</label>' +
+        '<textarea class="form-control" id="edit-description" name="description">' + description + '</textarea>' +
+        '</div>' +
+        '<button type="submit" class="btn btn-primary">Lưu thay đổi</button>' +
+        '</form>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+
+      // Thêm form chỉnh sửa vào body và hiển thị modal
+      $('body').append(editForm);
+      $('#editPositionModal').modal('show');
+    });
+  });
+</script>
+
+<%- include('../../layout/footer') %>
