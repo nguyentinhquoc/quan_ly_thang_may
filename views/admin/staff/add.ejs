@@ -1,6 +1,5 @@
 <%- include('../../layout/header') %>
 <style>
-  /* Đặt kích thước và kiểu cho avatar */
   .avatar-container {
     text-align: center;
     margin-top: 50px;
@@ -65,7 +64,7 @@
             <div class="avatar-container">
               <label for="avatar" class="avatar-label">
                 <input id="avatar" name="file" type="file" class="avatar-input" accept="image/*">
-                <img id="avatarPreview" class="avatar-preview" src="" >
+                <img id="avatarPreview" class="avatar-preview" src="">
               </label>
             </div>
             <label for="full_name" class="control-label mb-1">Họ và tên</label>
@@ -105,10 +104,7 @@
             <label for="description" class="control-label mb-1">Mô tả</label>
             <textarea id="description" name="description" class="form-control" aria-required="false" aria-invalid="false"></textarea>
           </div>
-          <div class="form-group">
-            <label for="password" class="control-label mb-1">Mật khẩu</label>
-            <input id="password" name="password" type="password" class="form-control" aria-required="true" aria-invalid="false" value="">
-          </div>
+          <input id="password" name="password" type="hidden" class="form-control" aria-required="true" aria-invalid="false" value="123456789">
           <div>
             <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
               <i class="fa fa-lock fa-lg"></i>&nbsp;
@@ -124,15 +120,12 @@
 <script>
   document.getElementById('avatar').addEventListener('change', function(event) {
     const file = event.target.files[0];
-
     if (file) {
       const reader = new FileReader();
-
       reader.onload = function(e) {
         const avatarPreview = document.getElementById('avatarPreview');
-        avatarPreview.src = e.target.result; // Set ảnh đã chọn làm hình nền preview
+        avatarPreview.src = e.target.result;
       };
-
       reader.readAsDataURL(file);
     }
   });

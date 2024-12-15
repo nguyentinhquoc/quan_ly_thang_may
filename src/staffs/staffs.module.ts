@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { DepartmensModule } from 'src/departmens/departmens.module'
 import { PositionsModule } from 'src/positions/positions.module'
+import { SendMailService } from 'src/send-mail/send-mail.service'
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { PositionsModule } from 'src/positions/positions.module'
     PositionsModule,
   ],
   controllers: [StaffsController],
-  providers: [StaffsService],
+  providers: [StaffsService,SendMailService],
   exports: [StaffsService]
 })
 export class StaffsModule {}

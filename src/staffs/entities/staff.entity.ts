@@ -1,4 +1,5 @@
 import { Department } from 'src/departmens/entities/departmen.entity'
+import { Notification } from 'src/notification/entities/notification.entity'
 import { Position } from 'src/positions/entities/position.entity'
 import { ProjectEdit } from 'src/project_edit/entities/project_edit.entity'
 import { ProjectStep } from 'src/project_steps/entities/project_step.entity'
@@ -61,4 +62,6 @@ export class Staff {
   projectSteps: ProjectStep[]
   @OneToMany(() => ProjectEdit, projectEdit => projectEdit.staff)
   projectEdits: ProjectEdit[]
+  @OneToMany(() => Notification, notification => notification.staff)
+  notifications: Notification[];
 }

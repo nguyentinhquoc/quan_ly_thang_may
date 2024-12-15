@@ -64,7 +64,10 @@ export class ProjectStepsService {
   }
 
   findOne (id: number) {
-    return `This action returns a #${id} projectStep`
+    return this.projectStepRepository.findOne({
+      where: { id },
+      relations: ['staff','project','workflowStep.step']
+    });
   }
   async findProject (id: number) {
     const projectSteps = await this.projectStepRepository.find({

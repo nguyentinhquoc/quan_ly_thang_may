@@ -38,6 +38,8 @@ import { ClientModule } from './client/client.module'
 import { ProjectEdit } from './project_edit/entities/project_edit.entity'
 import { ProjectEditModule } from './project_edit/project_edit.module'
 import { MaintenanceModule } from './maintenance/maintenance.module';
+import { NotificationModule } from './notification/notification.module';
+import { Notification } from './notification/entities/notification.entity'
 
 @Module({
   imports: [
@@ -62,6 +64,7 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
           Project,
           ProjectStep,
           ProjectEdit,
+          Notification,
         ],
         synchronize: true,
       }),
@@ -96,6 +99,7 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
     ClientModule,
     ProjectEditModule,
     MaintenanceModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [

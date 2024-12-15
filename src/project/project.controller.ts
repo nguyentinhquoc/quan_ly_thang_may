@@ -22,6 +22,9 @@ import { StaffsService } from 'src/staffs/staffs.service'
 import { ProjectStepsService } from 'src/project_steps/project_steps.service'
 import { ProjectEdit } from '../project_edit/entities/project_edit.entity'
 import { ProjectEditService } from 'src/project_edit/project_edit.service'
+import { NotificationService } from 'src/notification/notification.service'
+import { SendMailService } from 'src/send-mail/send-mail.service'
+import { MailerService } from '@nestjs-modules/mailer'
 @Controller('project')
 export class ProjectController {
   constructor (
@@ -33,6 +36,9 @@ export class ProjectController {
     private readonly staffsService: StaffsService,
     private readonly projectStepsService: ProjectStepsService,
     private readonly projectEditService: ProjectEditService,
+    private readonly notificationService: NotificationService,
+    private readonly sendMailService: SendMailService,
+    private readonly mailerService: MailerService,
   ) {}
   @Post()
   async create (
@@ -56,7 +62,6 @@ export class ProjectController {
       ...createProjectDto,
       infor_product: JSON.stringify(infor_product),
     }
-    console.log(newProject)
     const Project = await this.projectService.create(newProject)
     await this.customerService.create({
       full_name: createProjectDto.full_name,
@@ -74,6 +79,28 @@ export class ProjectController {
         staff: Staff,
         time: step.date,
       })
+      // Tạo thông báo
+      await this.notificationService.create({
+        title: 'Bạn có một công viêc mới',
+        message: `${WorkflowSteps.step.name} tại công trình :${Project.full_name}`,
+        staff: Staff,
+      })
+      // send mail thông báo
+      const contentSendMail = await this.sendMailService.notificationNewJob(
+        Staff.full_name,
+        Staff.email,
+        'Bạn có một công viêc mới',
+        `Bạn cần ${WorkflowSteps.step.name} tại công trình :${Project.full_name}`,
+      )
+      this.mailerService
+        .sendMail(contentSendMail)
+        .then(() => {
+          console.log('Email sent successfully')
+        })
+        .catch(error => {
+          console.error('Error sending email:', error)
+          return { message: 'Gửi mail thất bại!', error: error.message }
+        })
     }
     return res.redirect('/project')
   }
@@ -136,6 +163,26 @@ export class ProjectController {
             staff: Staff,
             time: step.date,
           })
+          await this.notificationService.create({
+            title: 'Bạn có một công viêc mới',
+            message: `Bạn cần ${WorkflowSteps.step.name} tại công trình :${project.full_name}`,
+            staff: Staff,
+          })
+          const contentSendMail = await this.sendMailService.notificationNewJob(
+            Staff.full_name,
+            Staff.email,
+            'Bạn có một công viêc mới',
+            `Bạn cần ${WorkflowSteps.step.name} tại công trình :${project.full_name}`,
+          )
+          this.mailerService
+            .sendMail(contentSendMail)
+            .then(() => {
+              console.log('Email sent successfully')
+            })
+            .catch(error => {
+              console.error('Error sending email:', error)
+              return { message: 'Gửi mail thất bại!', error: error.message }
+            })
           ArrayIdProjectStepNew.push(addProjectStep.id)
         } else {
           for (const CheckT of CheckTT) {
@@ -143,7 +190,6 @@ export class ProjectController {
           }
         }
       }
-
       const findByProjects = await this.projectStepsService.findByProject(id)
       for (const findByProject of findByProjects) {
         ArrayIdProjectStepOld.push(findByProject.id)
@@ -152,6 +198,27 @@ export class ProjectController {
         id => !ArrayIdProjectStepNew.includes(id),
       )
       for (id of ArrayIdProjectStepDelete) {
+        const projectStep = await this.projectStepsService.findOne(+id)
+        await this.notificationService.create({
+          title: 'Bạn bị loại khỏi công việc',
+          message: `Bạn bị loại khỏi công việc ${projectStep.workflowStep.step.name} tại công trình :${projectStep.project.full_name}`,
+          staff: projectStep.staff,
+        })
+        const contentSendMail = await this.sendMailService.notificationRemoveKJob(
+          projectStep.staff.full_name,
+          projectStep.staff.email,
+          'Bạn bị loại khỏi công việc',
+          `Bạn bị loại khỏi công việc ${projectStep.workflowStep.step.name} tại công trình :${projectStep.project.full_name}`,
+        )
+        this.mailerService
+          .sendMail(contentSendMail)
+          .then(() => {
+            console.log('Email sent successfully')
+          })
+          .catch(error => {
+            console.error('Error sending email:', error)
+            return { message: 'Gửi mail thất bại!', error: error.message }
+          })
         await this.projectStepsService.delete(+id)
       }
     }

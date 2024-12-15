@@ -21,12 +21,16 @@ import { DepartmensService } from 'src/departmens/departmens.service'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { diskStorage } from 'multer'
 import { extname } from 'path'
+import { SendMailService } from 'src/send-mail/send-mail.service'
+import { MailerService } from '@nestjs-modules/mailer'
 @Controller('staffs')
 export class StaffsController {
   constructor (
     private readonly staffsService: StaffsService,
     private readonly positionsService: PositionsService,
     private readonly departmensService: DepartmensService,
+    private readonly sendMailService: SendMailService,
+    private mailerService: MailerService,
   ) {}
   @Post()
   create (@Body() createStaffDto: CreateStaffDto) {
@@ -62,8 +66,25 @@ export class StaffsController {
     @Body() createStaffDto: CreateStaffDto,
     @Res() res: Response,
   ) {
-    createStaffDto.avatar = file.filename
+    if (file) {
+      createStaffDto.avatar = file.filename
+    }
     await this.staffsService.create(createStaffDto)
+    const contentSendMail = await this.sendMailService.notificationCreateStaff(
+      createStaffDto.full_name,
+      createStaffDto.email,
+      'Thông báo mới',
+      'Bạn đã được thêm vào hệ thống vui lòng truy cập link để đang nhập <a href="http://localhost:3000/login">Tại đây</a> <br> Lưu ý hãy đổi mật khẩu trong lần đầu đang nhập: <br> Mật khẩu: 123456789',
+    )
+    this.mailerService
+      .sendMail(contentSendMail)
+      .then(() => {
+        console.log('Email sent successfully')
+      })
+      .catch(error => {
+        console.error('Error sending email:', error)
+        return { message: 'Gửi mail thất bại!', error: error.message }
+      })
     return res.redirect('/staffs')
   }
   @Get()

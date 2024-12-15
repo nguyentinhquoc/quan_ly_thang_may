@@ -12,8 +12,7 @@ import { Position } from 'src/positions/entities/position.entity'
 export class CreateStaffDto {
 
   @IsString()
-  @IsNotEmpty()
-  full_name: string
+  full_name?: string
 
   @IsNotEmpty()
   department: Department

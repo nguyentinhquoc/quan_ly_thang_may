@@ -44,8 +44,6 @@ export class AppController {
   //       console.error('Error sending email:', error)
   //       return { message: 'Gửi mail thất bại!', error: error.message }
   //     })
-  //   console.log('thanh cong')
-  //   return { message: 'Gửi mail thành công!' }
   // }
 
   @Get()

@@ -54,6 +54,7 @@ export class WorkflowStepsService {
   async findOne (id: number) {
     return this.workflowStepRepository.findOne({
       where: { id },
+      relations: ['workflow', 'step'],
     })
   }
 
