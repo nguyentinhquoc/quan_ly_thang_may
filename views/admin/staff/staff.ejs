@@ -5,22 +5,28 @@
       <a href="/staffs/add" type="button" class="btn btn-primary" id="add-new-position"> <i class="fas fa-plus-square"></i>&nbsp; Thêm mới</a>
     </div>
  <div class="table-responsive table--no-card m-b-30">
-      <table class="table table-borderless table-data3">
+      <table class="table table-hover table-borderless table-data3">
         <thead >
-          <tr>
+          <tr class="thead-backgroup">
             <th>STT</th>
             <th>Họ và tên</th>
             <th>Số điện thoại</th>
             <th>Email</th>
             <th>Trạng thái</th>
-            <th></th>
+            <th>Tương tác</th>
           </tr>
         </thead>
         <tbody>
           <% staffs.forEach(function(staff, key) { %>
           <tr class="tr-shadow" data-id="<%= staff.id %>" data-name="<%= staff.name %>" data-description="<%= staff.description %>">
             <td><%= key + 1 %></td>
-            <td><span class="block-email"> <img src="/images/avatar/<%= staff.avatar %>" alt="" width="30px" height="30px" style="border-radius: 50%; height: 50px;" > <%= staff.full_name %></span></td>
+            <td>
+              <span class="block-email">
+                  <img src="/images/avatar/<%= staff.avatar %>" alt="" width="30px" height="30px" style="border-radius: 50%; height: 50px;">
+                  <%= staff.full_name %>
+              </span>
+          </td>
+          
             <td class="desc"><%= staff.number_phone  %></td>
             <td class="desc"><%= staff.email %></td>
             <td class="desc"><%= staff.status   %></td>
