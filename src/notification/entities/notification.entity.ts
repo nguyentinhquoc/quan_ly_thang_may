@@ -1,3 +1,4 @@
+import { Project } from 'src/project/entities/project.entity';
 import { Staff } from 'src/staffs/entities/staff.entity';
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 
@@ -15,6 +16,10 @@ export class Notification {
 
   @ManyToOne(() => Staff, staff => staff.notifications, { nullable: false })
   staff: Staff;
+
+
+  @ManyToOne(() => Project, project => project.notifications, { nullable: false })
+  project: Project;
 
   @Column({ default: false })
   isRead: boolean;

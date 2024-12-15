@@ -73,8 +73,8 @@ export class StaffsController {
     const contentSendMail = await this.sendMailService.notificationCreateStaff(
       createStaffDto.full_name,
       createStaffDto.email,
-      'Thông báo mới',
-      'Bạn đã được thêm vào hệ thống vui lòng truy cập link để đang nhập <a href="http://localhost:3000/login">Tại đây</a> <br> Lưu ý hãy đổi mật khẩu trong lần đầu đang nhập: <br> Mật khẩu: 123456789',
+      'Thông báo tạo tài khoản !!!',
+      '<p>Chúng tôi muốn thông báo rằng email của bạn vừa được đang ký tài khoản tại <strong>Thang Máy Tesla</strong>.</p>',
     )
     this.mailerService
       .sendMail(contentSendMail)

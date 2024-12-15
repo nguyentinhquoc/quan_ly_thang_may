@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+
+  .container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  .header {
+    text-align: center;
+    background-color: #ffeb3b; /* Màu nền vàng */
+    color: #333333; /* Màu xám đậm */
+    padding: 30px;
+    border-radius: 6px 6px 0 0;
+  }
+  .header h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+  }
+  .content {
+    text-align: center;
+    padding: 20px;
+    color: #333333; /* Màu xám đậm */
+  }
+  .content h2 {
+    font-size: 24px;
+  }
+  .content p {
+    font-size: 16px;
+  }
+  .content .password {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333; /* Màu xám đậm */
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid yellow; /* Màu xám đậm */
+    background-color: #fffbd4;
+    border-radius: 5px;
+  }
+  .content .button {
+    background-color: #333333; /* Màu xám đậm */
+    color: #ffffff;
+    padding: 12px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
+    margin-top: 20px;
+    display: inline-block;
+  }
+  .content .button:hover {
+    background-color: #2e2e2e; /* Màu xám đậm khi hover */
+  }
+  .footer {
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+    margin-top: 40px;
+  }
+  .footer a {
+    color: #333333; /* Màu xám đậm */
+    text-decoration: none;
+  }
+  .footer a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Thông báo loại khỏi công việc !!!</h1>
+    </div>
+    <div class="content">
+      <h2>Xin chào, ${name}</h2>
+      <div class="password">${Message}</div>
+    </div>
+    <div class="footer">
+      <p>Chúc bạn một ngày tốt lành!<br> Đội ngũ <strong>Thang Máy Tesla</strong></p>
+      <p>&copy; 2024 Thang Máy Tesla. Bảo mật và uy tín là cam kết của chúng tôi.</p>
+    </div>
+  </div>
+</body>
+</html>

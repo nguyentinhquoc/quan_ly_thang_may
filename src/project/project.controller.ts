@@ -81,16 +81,17 @@ export class ProjectController {
       })
       // Tạo thông báo
       await this.notificationService.create({
-        title: 'Bạn có một công viêc mới',
+        title: 'Thông báo về nhiệm vụ mới của bạn !!!',
         message: `${WorkflowSteps.step.name} tại công trình :${Project.full_name}`,
         staff: Staff,
+        project: Project,
       })
       // send mail thông báo
       const contentSendMail = await this.sendMailService.notificationNewJob(
         Staff.full_name,
         Staff.email,
-        'Bạn có một công viêc mới',
-        `Bạn cần ${WorkflowSteps.step.name} tại công trình :${Project.full_name}`,
+        'Thông báo nhiệm vụ mới !!!',
+        `Chúng tôi xin thông báo về nhiệm vụ mới của bạn tại <strong>Thang máy Tesla </strong> <br> <div class="password">Bạn cần ${WorkflowSteps.step.name} tại công trình :${Project.full_name}</div> `,
       )
       this.mailerService
         .sendMail(contentSendMail)
@@ -164,15 +165,16 @@ export class ProjectController {
             time: step.date,
           })
           await this.notificationService.create({
-            title: 'Bạn có một công viêc mới',
+            title: 'Thông báo nhiệm vụ mới !!!',
             message: `Bạn cần ${WorkflowSteps.step.name} tại công trình :${project.full_name}`,
             staff: Staff,
+            project: project,
           })
           const contentSendMail = await this.sendMailService.notificationNewJob(
             Staff.full_name,
             Staff.email,
-            'Bạn có một công viêc mới',
-            `Bạn cần ${WorkflowSteps.step.name} tại công trình :${project.full_name}`,
+            'Thông báo nhiệm vụ mới !!!',
+            `Chúng tôi xin thông báo về nhiệm vụ mới của bạn tại <strong>Thang máy Tesla </strong> <br> <div class="password">Bạn cần ${WorkflowSteps.step.name} tại công trình :${project.full_name}</div> `,
           )
           this.mailerService
             .sendMail(contentSendMail)
@@ -200,16 +202,18 @@ export class ProjectController {
       for (id of ArrayIdProjectStepDelete) {
         const projectStep = await this.projectStepsService.findOne(+id)
         await this.notificationService.create({
-          title: 'Bạn bị loại khỏi công việc',
-          message: `Bạn bị loại khỏi công việc ${projectStep.workflowStep.step.name} tại công trình :${projectStep.project.full_name}`,
+          title: 'Thông báo loại khỏi công việc !!!',
+          message: `Bạn không cần ${projectStep.workflowStep.step.name} tại công trình :${projectStep.project.full_name} nữa`,
           staff: projectStep.staff,
+          project: project,
         })
-        const contentSendMail = await this.sendMailService.notificationRemoveKJob(
-          projectStep.staff.full_name,
-          projectStep.staff.email,
-          'Bạn bị loại khỏi công việc',
-          `Bạn bị loại khỏi công việc ${projectStep.workflowStep.step.name} tại công trình :${projectStep.project.full_name}`,
-        )
+        const contentSendMail =
+          await this.sendMailService.notificationRemoveKJob(
+            projectStep.staff.full_name,
+            projectStep.staff.email,
+            'Thông báo loại khỏi công việc !!!',
+            `Bạn không cần ${projectStep.workflowStep.step.name} tại công trình :${projectStep.project.full_name} nữa, Xin cảm ơn.`,
+          )
         this.mailerService
           .sendMail(contentSendMail)
           .then(() => {

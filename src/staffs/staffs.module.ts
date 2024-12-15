@@ -8,7 +8,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { DepartmensModule } from 'src/departmens/departmens.module'
 import { PositionsModule } from 'src/positions/positions.module'
 import { SendMailService } from 'src/send-mail/send-mail.service'
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([Staff]),
@@ -17,15 +16,16 @@ import { SendMailService } from 'src/send-mail/send-mail.service'
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
-          expiresIn: configService.get<string>('JWT_TIME') },
+          expiresIn: configService.get<string>('JWT_TIME'),
+        },
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
     DepartmensModule,
     PositionsModule,
   ],
   controllers: [StaffsController],
-  providers: [StaffsService,SendMailService],
-  exports: [StaffsService]
+  providers: [StaffsService, SendMailService],
+  exports: [StaffsService],
 })
 export class StaffsModule {}

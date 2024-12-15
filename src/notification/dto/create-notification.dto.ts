@@ -1,4 +1,5 @@
 import { IsString, IsNotEmpty, IsInt } from 'class-validator';
+import { Project } from 'src/project/entities/project.entity';
 import { Staff } from 'src/staffs/entities/staff.entity';
 
 export class CreateNotificationDto {
@@ -12,5 +13,7 @@ export class CreateNotificationDto {
 
   @IsNotEmpty()
   staff: Staff;
+  @IsNotEmpty()
+  project: Project;
 }
 

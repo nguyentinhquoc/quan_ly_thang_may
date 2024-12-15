@@ -15,6 +15,24 @@ export class NotificationService {
     return this.notificationRepository.save(createNotificationDto);
   }
 
+  async findNotificationMax6(id: number): Promise<Notification[]> {
+    return this.notificationRepository.createQueryBuilder('notification')
+      .innerJoinAndSelect('notification.staff', 'staff')
+      .innerJoinAndSelect('notification.project', 'project')
+      .where('staff.id = :id', { id })
+      .orderBy('notification.createdAt', 'DESC')
+      .limit(6)
+      .getMany();
+  }
+
+  async countUnreadNotifications(staffId: number): Promise<number> {
+    return this.notificationRepository.createQueryBuilder('notification')
+      .innerJoin('notification.staff', 'staff')
+      .where('staff.id = :staffId', { staffId })
+      .andWhere('notification.isRead = false')
+      .getCount();
+  }
+
   findAll() {
     return `This action returns all notification`;
   }
@@ -23,8 +41,8 @@ export class NotificationService {
     return `This action returns a #${id} notification`;
   }
 
-  update(id: number, updateNotificationDto: UpdateNotificationDto) {
-    return `This action updates a #${id} notification`;
+  updateIsRead(id: number) {
+    return this.notificationRepository.update(id, { isRead: true });
   }
 
   remove(id: number) {

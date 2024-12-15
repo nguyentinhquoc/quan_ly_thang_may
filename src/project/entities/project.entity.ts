@@ -1,3 +1,4 @@
+import { Notification } from 'src/notification/entities/notification.entity'
 import { ProjectEdit } from 'src/project_edit/entities/project_edit.entity'
 import { ProjectStep } from 'src/project_steps/entities/project_step.entity'
 import {
@@ -33,8 +34,13 @@ export class Project {
   updatedAt: Date
   @DeleteDateColumn()
   deletedAt?: Date
+
   @OneToMany(() => ProjectStep, (projectStep) => projectStep.project)
   projectSteps: ProjectStep[];
+
   @OneToMany(() => ProjectStep, projectEdit => projectEdit.project)
   projectEdits: ProjectEdit[];
+
+  @OneToMany(() => Notification, notification => notification.project)
+  notifications: Notification[];
 }
