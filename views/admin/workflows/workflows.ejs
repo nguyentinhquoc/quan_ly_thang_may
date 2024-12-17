@@ -7,13 +7,13 @@
           class="fas fa-plus-square"></i>&nbsp; Thêm mới</button>
     </div>
         <div class="table-responsive m-b-40">
-        <table class="table table-borderless table-striped table-earning">
+        <table class="table table-hover table-borderless table-striped table-earning">
         <thead >
-          <tr>
-            <th>STT</th>
+          <tr class="thead-backgroup">
+            <th class="text-stt">STT</th>
             <th>Tên quy trình</th>
             <th>Mô tả</th>
-            <th></th>
+            <th>Tương tác</th>
           </tr>
         </thead>
         <tbody>
@@ -21,7 +21,7 @@
           <tr class="tr-shadow" data-id="<%= workflow.id %>"
             data-name="<%= workflow.name %>"
             data-description="<%= workflow.description %>">
-            <td><%= key + 1 %></td>
+            <td class="text-stt"><%= key + 1 %></td>
             <td><span class="block-email"><%= workflow.name %></span></td>
             <td class="desc"><%= workflow.description %></td>
             <td>

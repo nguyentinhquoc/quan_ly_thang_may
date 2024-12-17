@@ -25,6 +25,7 @@ import { ProjectEditService } from 'src/project_edit/project_edit.service'
 import { NotificationService } from 'src/notification/notification.service'
 import { SendMailService } from 'src/send-mail/send-mail.service'
 import { MailerService } from '@nestjs-modules/mailer'
+import { MaintenanceService } from 'src/maintenance/maintenance.service'
 @Controller('project')
 export class ProjectController {
   constructor (
@@ -39,6 +40,7 @@ export class ProjectController {
     private readonly notificationService: NotificationService,
     private readonly sendMailService: SendMailService,
     private readonly mailerService: MailerService,
+    private readonly maintenanceService: MaintenanceService,
   ) {}
   @Post()
   async create (
@@ -102,6 +104,12 @@ export class ProjectController {
           console.error('Error sending email:', error)
           return { message: 'Gửi mail thất bại!', error: error.message }
         })
+    }
+    for (const time of createProjectDto.timeMaintenance) {
+      await this.maintenanceService.create({
+        project: Project,
+        time: time,
+      })
     }
     return res.redirect('/project')
   }

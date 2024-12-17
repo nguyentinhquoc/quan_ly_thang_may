@@ -6,79 +6,83 @@ import {
   IsString,
   MaxLength,
   IsArray,
-} from 'class-validator';
+  IsDateString,
+} from 'class-validator'
 
 export class CreateProjectDto {
-  workflow: number;
+  workflow: number
 
   @IsNotEmpty()
   @MaxLength(255)
-  full_name: string;
+  full_name: string
 
   @IsNotEmpty()
   @IsPhoneNumber('VN')
-  number_phone: string;
+  number_phone: string
 
   @IsOptional()
   @IsEmail()
   @MaxLength(255)
-  email?: string;
+  email?: string
 
   @IsOptional()
   @IsString()
-  address?: string;
+  address?: string
 
   @IsOptional()
   @IsString()
-  infor_product?: any; // Hoặc kiểu dữ liệu phù hợp
+  infor_product?: any
 
   @MaxLength(225)
-  description: string;
+  description: string
 
-  @IsNotEmpty()  // Có thể cần kiểm tra tính hợp lệ của "steps"
-  steps: string;
+  @IsNotEmpty()
+  steps: string
 
-  @IsOptional()
-  @IsString()
-  dongCo?: string;
-
-  @IsOptional()
-  @IsString()
-  tuDien?: string;
+  @IsDateString({}, { each: true })
+  timeMaintenance?: string[]
 
   @IsOptional()
   @IsString()
-  capTai?: string;
+  dongCo?: string
 
   @IsOptional()
   @IsString()
-  congSuat?: string;
+  tuDien?: string
 
   @IsOptional()
   @IsString()
-  hoThang?: string;
+  capTai?: string
 
   @IsOptional()
   @IsString()
-  cabin?: string;
+  congSuat?: string
 
   @IsOptional()
   @IsString()
-  cua?: string;
+  hoThang?: string
 
   @IsOptional()
   @IsString()
-  pit?: string;
+  cabin?: string
 
   @IsOptional()
   @IsString()
-  oh?: string;
+  cua?: string
 
   @IsOptional()
   @IsString()
-  baoHanh?: string;
+  pit?: string
 
   @IsOptional()
   @IsString()
-  baoTri?: string;
+  oh?: string
+
+  @IsOptional()
+  @IsString()
+  baoHanh?: string
+
+  @IsOptional()
+  @IsString()
+  baoTri?: string
 }

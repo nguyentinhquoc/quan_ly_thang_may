@@ -1,4 +1,5 @@
 import { Department } from 'src/departmens/entities/departmen.entity'
+import { Maintenance } from 'src/maintenance/entities/maintenance.entity'
 import { Notification } from 'src/notification/entities/notification.entity'
 import { Position } from 'src/positions/entities/position.entity'
 import { ProjectEdit } from 'src/project_edit/entities/project_edit.entity'
@@ -13,45 +14,32 @@ import {
   DeleteDateColumn,
   OneToMany,
 } from 'typeorm'
-
 @Entity()
 export class Staff {
   @PrimaryGeneratedColumn()
   id: number
-
   @Column({ length: 255 })
   full_name: string
-
   @Column({ unique: true, length: 15 })
   number_phone: string
-
   @Column({ unique: true, length: 255 })
   email: string
-
   @Column('text', { nullable: true })
   address: string
-
   @Column({ length: 255, nullable: true })
   avatar: string
-
   @Column('text', { nullable: true })
   description: string
-
   @Column({ default: true })
   status: boolean
-
   @Column({ length: 255 })
   password: string
-
   @Column({ default: false })
   role_admin: boolean
-
   @ManyToOne(() => Department, department => department.staff)
   department: Department
-
   @ManyToOne(() => Position, position => position.staff)
   position: Position
-
   @CreateDateColumn()
   createdAt: Date
   @UpdateDateColumn()
@@ -63,5 +51,7 @@ export class Staff {
   @OneToMany(() => ProjectEdit, projectEdit => projectEdit.staff)
   projectEdits: ProjectEdit[]
   @OneToMany(() => Notification, notification => notification.staff)
-  notifications: Notification[];
+  notifications: Notification[]
+  @OneToMany(() => Maintenance, maintenance => maintenance.staff)
+  maintenances: Maintenance[]
 }

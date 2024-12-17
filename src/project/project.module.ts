@@ -12,9 +12,21 @@ import { ProjectStepsModule } from 'src/project_steps/project_steps.module'
 import { ProjectEditModule } from 'src/project_edit/project_edit.module'
 import { NotificationModule } from 'src/notification/notification.module'
 import { SendMailService } from 'src/send-mail/send-mail.service'
+import { MaintenanceModule } from 'src/maintenance/maintenance.module'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Project]), WorkflowsModule, CustomersModule, StepsModule, WorkflowStepsModule, StaffsModule, ProjectStepsModule, NotificationModule,forwardRef(() => ProjectEditModule),],
+  imports: [
+    TypeOrmModule.forFeature([Project]),
+    WorkflowsModule,
+    CustomersModule,
+    StepsModule,
+    WorkflowStepsModule,
+    StaffsModule,
+    ProjectStepsModule,
+    NotificationModule,
+    forwardRef(() => MaintenanceModule),
+    forwardRef(() => ProjectEditModule),
+  ],
   controllers: [ProjectController],
   providers: [ProjectService, SendMailService],
   exports: [ProjectService],

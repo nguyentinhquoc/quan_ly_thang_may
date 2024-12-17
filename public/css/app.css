@@ -1,0 +1,42 @@
+.thead-backgroup {
+  background-color: #1b5ac4;
+}
+.thead-backgroup:hover {
+  background-color: #1757c6;
+  color: #ffffff;
+}
+a {
+  text-decoration: none;
+}
+.text-content {
+  font-weight: 600;
+}
+.text {
+  color: #ffffff;
+}
+.block-email {
+  display: flex;
+  align-items: center;
+}
+
+.block-email img {
+  width: 40px; /* Tăng kích thước ảnh cho rõ hơn */
+  height: 40px;
+  border-radius: 50%; /* Giữ nguyên bo tròn */
+  object-fit: cover; /* Đảm bảo ảnh không bị méo */
+  margin-right: 10px; /* Thêm khoảng cách giữa ảnh và tên */
+}
+
+.block-email span {
+  font-weight: bold;
+  color: #333; /* Màu chữ */
+}
+.pa-10 {
+  padding-top: 20px;
+}
+.text-stt {
+  text-align: center;
+}
+.flex {
+  display: flex;
+}

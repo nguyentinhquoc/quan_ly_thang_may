@@ -1,3 +1,4 @@
+import { Maintenance } from 'src/maintenance/entities/maintenance.entity'
 import { Notification } from 'src/notification/entities/notification.entity'
 import { ProjectEdit } from 'src/project_edit/entities/project_edit.entity'
 import { ProjectStep } from 'src/project_steps/entities/project_step.entity'
@@ -43,4 +44,6 @@ export class Project {
 
   @OneToMany(() => Notification, notification => notification.project)
   notifications: Notification[];
+  @OneToMany(() => Maintenance, maintenance => maintenance.project)
+  maintenances: Maintenance[];
 }

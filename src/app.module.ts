@@ -37,9 +37,11 @@ import { AuthGuard2 } from './guards/auth/auth.guard'
 import { ClientModule } from './client/client.module'
 import { ProjectEdit } from './project_edit/entities/project_edit.entity'
 import { ProjectEditModule } from './project_edit/project_edit.module'
-import { MaintenanceModule } from './maintenance/maintenance.module';
-import { NotificationModule } from './notification/notification.module';
+import { NotificationModule } from './notification/notification.module'
 import { Notification } from './notification/entities/notification.entity'
+import { Maintenance } from './maintenance/entities/maintenance.entity'
+import { MaintenanceModule } from './maintenance/maintenance.module'
+import { MaintenanceActionsModule } from './maintenance_actions/maintenance_actions.module';
 
 @Module({
   imports: [
@@ -65,6 +67,7 @@ import { Notification } from './notification/entities/notification.entity'
           ProjectStep,
           ProjectEdit,
           Notification,
+          Maintenance,
         ],
         synchronize: true,
       }),
@@ -100,6 +103,7 @@ import { Notification } from './notification/entities/notification.entity'
     ProjectEditModule,
     MaintenanceModule,
     NotificationModule,
+    MaintenanceActionsModule,
   ],
   controllers: [AppController],
   providers: [

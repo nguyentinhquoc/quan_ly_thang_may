@@ -53,7 +53,7 @@
   <div class="col-md-12">
 
     <div class="card">
-      <div class="card-header">Thêm mới nhân viên</div>
+      <div class="card-header text-content">Thêm mới nhân viên</div>
       <div class="card-body">
         <div class="card-title">
           <h3 class="text-center title-2">Thêm mới nhân viên</h3>
@@ -62,26 +62,29 @@
         <form method="post" novalidate="novalidate" enctype="multipart/form-data">
           <div class="form-group">
             <div class="avatar-container">
-              <label for="avatar" class="avatar-label">
+              <label for="avatar" class="avatar-label ">
                 <input id="avatar" name="file" type="file" class="avatar-input" accept="image/*">
                 <img id="avatarPreview" class="avatar-preview" src="">
               </label>
             </div>
-            <label for="full_name" class="control-label mb-1">Họ và tên</label>
-            <input id="full_name" name="full_name" type="text" class="form-control" aria-required="true" aria-invalid="false" value="" required>
+            <label for="full_name" class="control-label mb-1 text-content">Họ và tên</label>
+            <input id="full_name" placeholder="Enter Name" name="full_name" type="text" class="form-control" aria-required="true" aria-invalid="false" value="" required>
           </div>
           <div class="d-flex justify-content-between">
             <div class="form-group w-50">
-              <label for="department" class="control-label mb-1">Phòng ban</label>
+              <label for="department" class="control-label mb-1 text-content">Phòng ban</label>
               <select id="department" name="department" class="form-control">
+                <option value="" selected>Chọn phòng ban</option>
                 <% departmens.forEach(function(departmen) { %>
                 <option value="<%= departmen.id %>"><%= departmen.name %></option>
                 <% }) %>
               </select>
             </div>
             <div class="form-group w-25">
-              <label for="position" class="control-label mb-1">Vị trí</label>
+              <label for="position" class="control-label mb-1 text-content">Vị trí</label>
               <select id="position" name="position" class="form-control">
+                <option value="" selected>Chọn chức vụ</option>
+
                 <% positions.forEach(function(position) { %>
                 <option value="<%= position.id %>"><%= position.name %></option>
                 <% }) %>
@@ -89,26 +92,26 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="number_phone" class="control-label mb-1">Số điện thoại</label>
-            <input id="number_phone" name="number_phone" type="tel" class="form-control" aria-required="true" aria-invalid="false" value="">
+            <label for="number_phone" class="control-label mb-1 text-content">Số điện thoại</label>
+            <input id="number_phone" placeholder="Enter Number Phone" name="number_phone" type="tel" class="form-control" aria-required="true" aria-invalid="false" value="">
           </div>
           <div class="form-group">
-            <label for="email" class="control-label mb-1">Email</label>
-            <input id="email" name="email" type="email" class="form-control" aria-required="true" aria-invalid="false" value="">
+            <label for="email" class="control-label mb-1 text-content">Email</label>
+            <input id="email" name="email" placeholder="Enter Address Email" type="email" class="form-control" aria-required="true" aria-invalid="false" value="">
           </div>
           <div class="form-group">
-            <label for="address" class="control-label mb-1">Địa chỉ</label>
-            <textarea id="address" name="address" class="form-control" aria-required="false" aria-invalid="false"></textarea>
+            <label for="address" class="control-label mb-1 text-content">Địa chỉ</label>
+            <textarea id="address" placeholder="Enter Address" name="address" class="form-control" aria-required="false" aria-invalid="false"></textarea>
           </div>
           <div class="form-group">
-            <label for="description" class="control-label mb-1">Mô tả</label>
-            <textarea id="description" name="description" class="form-control" aria-required="false" aria-invalid="false"></textarea>
+            <label for="description" class="control-label mb-1 text-content">Mô tả</label>
+            <textarea id="description" placeholder="Enter Description" name="description" class="form-control" aria-required="false" aria-invalid="false"></textarea>
           </div>
           <input id="password" name="password" type="hidden" class="form-control" aria-required="true" aria-invalid="false" value="123456789">
           <div>
             <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
               <i class="fa fa-lock fa-lg"></i>&nbsp;
-              <span id="payment-button-amount">Thêm mới nhân viên</span>
+              <span id="payment-button-amount ">Thêm mới nhân viên</span>
               <span id="payment-button-sending" style="display:none;">Sending…</span>
             </button>
           </div>
