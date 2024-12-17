@@ -379,6 +379,10 @@ section {
     -ms-flex-direction: column;
     flex-direction: column;
   }
+  .fixed {
+    position: relative;
+    width: 100%;
+  }
 }
 
 .login-form .form-group label {
