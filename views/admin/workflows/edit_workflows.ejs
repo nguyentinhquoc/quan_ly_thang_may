@@ -15,16 +15,51 @@
   .empty-message {
     height: 30px;
   }
+  .search{
+    display: inline-block;
+    border: 1px solid gray;
+    padding: 6px;
+    border-radius: 5px;
+   
+  }
+  .mt{
+    margin-top: -5px;
+  }
+  @media (max-width: 991px) {
+  .fixed {
+    position: relative;
+    width: 100%;
+  }}
+  @media (max-width: 1100px) {
+  .search{
+    width: 70%;
+  }
+  }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#unused-items li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 <div class="row item-list">
   <div class="col-lg-4">
     <section class="card p-3">
       <h5>Các bước nhỏ chưa dùng</h5>
       <div class="d-flex justify-content-between m-t-15 m-b-15">
         <div></div>
-        <button type="button" class="btn btn-primary" id="add-new-position">
+        <div class="form-group">
+          <input class="search" id="myInput" type="text" placeholder="Search..">
+        <button type="button" class="btn mt btn-primary" id="add-new-position">
           <i class="fas fa-plus-square"></i>&nbsp; Thêm bước
         </button>
+        </div>
+        
       </div>
       <ul id="unused-items">
         <% NonePickerIn.forEach(function(step) { %>
@@ -35,7 +70,7 @@
   </div>
   <div class="col-lg-8">
     <form action="?_method=PATCH" method="post">
-      <section class="card p-3">
+      <section class="card p-3 fixed">
         <div class="card-body text-secondary">
           <ul id="used-items">
             <h5> Quy trình hiện tại: </h5>
