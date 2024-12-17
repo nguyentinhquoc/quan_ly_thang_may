@@ -1,3 +1,4 @@
+import { MaintenanceAction } from 'src/maintenance_actions/entities/maintenance_action.entity'
 import { Project } from 'src/project/entities/project.entity'
 import { Staff } from 'src/staffs/entities/staff.entity'
 import {
@@ -6,6 +7,7 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -14,9 +16,11 @@ import {
 export class Maintenance {
   @PrimaryGeneratedColumn()
   id: number
-  @Column({ type: 'date' }) time: string;
+  @Column({ type: 'date' }) time: string
   @Column({ default: false })
-  status: boolean
+  timeSuccess: string
+  @Column({ default: 'Bảo trì định kỳ' })
+  reason: string
   @CreateDateColumn()
   createdAt: Date
   @UpdateDateColumn()
@@ -25,6 +29,9 @@ export class Maintenance {
   deletedAt?: Date
   @ManyToOne(() => Project, project => project.maintenances)
   project: Project
-  @ManyToOne(() => Staff, staff => staff.maintenances)
-  staff: Staff
+  @OneToMany(
+    () => MaintenanceAction,
+    maintenanceAction => maintenanceAction.maintenance,
+  )
+  maintenanceActions: MaintenanceAction[]
 }

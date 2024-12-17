@@ -3,8 +3,7 @@ import { CreateMaintenanceDto } from './dto/create-maintenance.dto'
 import { UpdateMaintenanceDto } from './dto/update-maintenance.dto'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Maintenance } from './entities/maintenance.entity'
-import { IsNull, MoreThanOrEqual, Not, Repository } from 'typeorm'
-
+import { Repository } from 'typeorm'
 @Injectable()
 export class MaintenanceService {
   constructor (
@@ -14,43 +13,18 @@ export class MaintenanceService {
   create (createMaintenanceDto: CreateMaintenanceDto) {
     return this.maintenanceRepository.save(createMaintenanceDto)
   }
-  findAll (status) {
-    if (status == 'tat-ca') {
-      return this.maintenanceRepository.find({
-        relations: ['project', 'staff'],
-        order: {
-          time: 'ASC',
-        },
-      })
-    } else if (status == 'sap-toi') {
-      const today = new Date()
-      today.setHours(0, 0, 0, 0)
-      return this.maintenanceRepository.find({
-        relations: ['project', 'staff'],
-        where: {
-          time: MoreThanOrEqual(today.toISOString().slice(0, 10)),
-        },
-        order: {
-          time: 'ASC',
-        },
-      })
-    } else if (status == 'dang-bao-tri') {
-      return this.maintenanceRepository.find({
-        relations: ['project', 'staff'],
-        where: {
-          status: false,
-          staff: Not(IsNull()),
-        },
-        order: {
-          time: 'ASC',
-        },
-      })
-    }
+  findAll () {
+    return this.maintenanceRepository.find({
+      relations: ['project', 'maintenanceActions'],
+      order: {
+        time: 'ASC',
+      },
+    })
   }
 
-  findAllWProject(idProject: number) {
+  findAllWProject (idProject: number) {
     return this.maintenanceRepository.find({
-      relations: ['project', 'staff'],
+      relations: ['project', 'maintenanceActions', 'maintenanceActions.staff'],
       where: {
         project: {
           id: idProject,
@@ -61,7 +35,14 @@ export class MaintenanceService {
       },
     })
   }
-
+  findOne (id: number) {
+    return this.maintenanceRepository.findOne({
+      relations: ['project', 'maintenanceActions'],
+      where: {
+        id: id,
+      },
+    })
+  }
   update (id: number, updateMaintenanceDto: UpdateMaintenanceDto) {
     return `This action updates a #${id} maintenance`
   }

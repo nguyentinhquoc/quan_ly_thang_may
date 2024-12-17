@@ -204,37 +204,63 @@
       opacity: 0;
     }
   }
+
+  .infor-staff:hover {
+    opacity: 0.7;
+    background-color: rgb(45, 145, 227);
+    color: white;
+  }
+
+  .infor-staff {
+    border-bottom: 0.5px solid rgb(77, 211, 229);
+  }
+
+  #itemList {
+    display: none;
+  }
 </style>
 <div class="row">
   <div class="col-md-12 card p-3">
     <div class="m-b-30">
       <h2>
-        Danh sách thời gian bảo trì của dự án
+        Danh sách thời gian bảo trì
       </h2>
       <p>Chủ dự án: <%= project.full_name %></p>
+      <button class="btn btn-primary mt-3 mb-3" id="add-maintenance">+ Thêm bảo trì
+      </button>
       <table class="table">
         <tr>
+          <th>Nội dung bảo trì</th>
           <th>Thời gian bảo trì dự tính</th>
           <th>Nhân viên thực hiện</th>
           <th>Trạng thái</th>
         </tr>
         <% maintenanceWProjects.forEach(function(item,index) { %>
         <tr>
+          <td><%=item.reason%></td>
           <td><%=item.time%></td>
-          <td> <p class="btn btn-primary">+</p></td>
+          <td>
+            <% item.maintenanceActions.forEach(function(action) { %>
+            <img src="/images/avatar/<%=  action.staff.avatar %>" alt height="30px"
+              width="30px" style="border-radius: 50%;">
+            <%= action.staff.full_name %>
+            <br>
+            <br>
+            <% }) %>
+            <p class="btn btn-primary add-staff" idValue="<%=item.id%>">+ Thêm nhân
+              viên</p>
+          </td>
           <td style="width: fit-content;">
-               <p style="width: fit-content;" id="maintenance-<%= index %>"
-              class="alert fade alert-simple alert-<%= item.status == 0 ? 'info' : 'success' %> alert-dismissible text-left font__size-16 font__weight-light brk-library-rendered rendered show">
-              <span class="font__weight-semibold"> <% if(!item.staff){ %> Chưa bắt đầu <%
-                } else if(item.status && item.staff ){%> Đã hoàn thành <%}
-                else { %> Đang thực hiện <% }%> </span>
+            <p style="width: fit-content;" id="maintenance-<%= index %>"
+              class="alert fade alert-simple alert-<%= item.timeSuccess ? 'info' : 'success' %> alert-dismissible text-left font__size-16 font__weight-light brk-library-rendered rendered show">
+              <span class="font__weight-semibold" style="background-color: red;"> Thể hiện
+                trạng thái</span>
             </p>
           </td>
         </tr>
         <% }); %>
       </table>
       <div class="row">
-
       </div>
     </div>
   </div>
@@ -253,5 +279,136 @@
       }
     });
   });
+  $(document).ready(function() {
+    $('.add-staff').click(function() {
+      $('#newPositionModal').remove();
+      var id = $(this).attr('idValue');
+      var form =
+        '<form action="/maintenance-actions" method="POST" class="modal fade" id="newPositionModal" tabindex="-1" aria-labelledby="newPositionModalLabel" aria-hidden="true">' +
+        '<div class="modal-dialog">' +
+        '<div class="modal-content">' +
+        '<div class="modal-header">' +
+        '<div class="d-flex justify-content-between w-100" >' +
+        `<h5 class="modal-title" id="newPositionModalLabel">Chọn người bảo trì</h5>
+        <input type="hidden" id="staffId" name="staff">
+        <input type="hidden" value="${id}" name="maintenance">
+        ` +
+        '<button class="btn btn-success clickXN" disable onclick="clickXN()" disabled>Xác nhận</button>' +
+        '</div>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<div >' +
+        '<div class="form-group">' +
+        '<label for="date-time">Chọn thời gian hết hạn:</label>' +
+        '<input type="datetime-local" class="form-control" id="date-time" name="time" onchange="changeDate()">' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="staff">Thêm nhân viên:</label>' +
+        '<input disabled type="text" class="form-control" id="staff-search" oninput="filterList()" autocomplete="off">' +
+        `<ul id="itemList">
+  <% staffs.forEach(function(staff) { %>
+        <li class="btn w-100 infor-staff" data-id="<%=staff.id%>" onclick="pushStaff('<%=staff.full_name%>','<%=staff.id%>')"><%=staff.full_name%> - <%=staff.number_phone%></li>
+        <% }) %>
+</ul>`
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</form>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>';
+      $('body').append(form);
+      $('#newPositionModal').modal('show');
+      $('#date-time').val('');
+      $('#staff-search').val('');
+    });
+    $('#add-maintenance').click(function() {
+      $('#newPositionModal').remove();
+      var id = $(this).attr('idValue');
+      var form =
+        '<form action="/maintenance" method="POST" class="modal fade" id="newPositionModal" tabindex="-1" aria-labelledby="newPositionModalLabel" aria-hidden="true">' +
+        '<div class="modal-dialog">' +
+        '<div class="modal-content">' +
+        '<div class="modal-header">' +
+        '<div class="d-flex justify-content-between w-100" >' +
+        `<h5 class="modal-title" id="newPositionModalLabel">Chọn người bảo trì</h5>` +
+        '<button class="btn btn-success clickXN" disable onclick="clickXN()" disabled>Xác nhận</button>' +
+        '</div>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<div >' +
+        '<div class="form-group">' +
+        '<label for="date-time">Chọn thời gian hết hạn:</label>' +
+        '<input type="datetime-local" class="form-control" id="date-time" name="time" onchange="changeDate()">' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="staff">Nội dung bảo trì:</label>' +
+        '<input disabled type="text" class="form-control" id="staff-search" oninput="onpenSubmit()" name="reason" autocomplete="off">' +
+        `<ul id="itemList">
+  <% staffs.forEach(function(staff) { %>
+        <li class="btn w-100 infor-staff" data-id="<%=staff.id%>" onclick="pushStaff('<%=staff.full_name%>','<%=staff.id%>')"><%=staff.full_name%> - <%=staff.number_phone%></li>
+        <% }) %>
+</ul>`
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</form>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>';
+      $('body').append(form);
+      $('#newPositionModal').modal('show');
+      $('#date-time').val('');
+      $('#staff-search').val('');
+    });
+  })
+
+  function pushStaff(value, id) {
+    if ($('#date-time').val() != '') {
+      $('.clickXN').prop('disabled', false);
+      $('#staffId').attr('value', id);
+    } else {
+      $('.clickXN').prop('disabled', true);
+    }
+    document.getElementById('staff-search').value = value;
+    document.getElementById('itemList').style.display = "none";
+  }
+function onpenSubmit(){
+      $('.clickXN').prop('disabled', false);
+}
+  function filterList() {
+    document.getElementById('itemList').style.display = "block"
+    var input = document.getElementById('staff-search').value.toLowerCase();
+    var items = document.getElementById('itemList').getElementsByTagName('li');
+    var list = document.getElementById('itemList');
+    console.log(input)
+    if (input) {
+      list.style.display = "block";
+    } else {
+      list.style.display = "none";
+    }
+    for (var i = 0; i < items.length; i++) {
+      var itemText = items[i].textContent || items[i].innerText;
+      var dataId = $(items[i]).attr('data-id');
+      var stepId = $(items[i]).attr('data-stepId');
+      if (itemText.toLowerCase().includes(input)) {
+        items[i].style.display = "";
+      } else {
+        items[i].style.display = "none";
+      }
+    }
+  }
+
+  function changeDate() {
+    if ($('#date-time').val() != '') {
+      $('#staff-search').prop('disabled', false);
+    } else {
+      $('#staff-search').prop('disabled', true);
+    }
+  }
 </script>
 <%- include('../../layout/footer') %>

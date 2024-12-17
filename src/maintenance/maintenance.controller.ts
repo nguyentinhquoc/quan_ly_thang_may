@@ -12,12 +12,14 @@ import { MaintenanceService } from './maintenance.service'
 import { CreateMaintenanceDto } from './dto/create-maintenance.dto'
 import { UpdateMaintenanceDto } from './dto/update-maintenance.dto'
 import { ProjectService } from 'src/project/project.service'
+import { StaffsService } from 'src/staffs/staffs.service'
 
 @Controller('maintenance')
 export class MaintenanceController {
   constructor (
     private readonly maintenanceService: MaintenanceService,
     readonly projectService: ProjectService,
+    readonly staffsService: StaffsService,
   ) {}
 
   @Post()
@@ -25,20 +27,11 @@ export class MaintenanceController {
     return this.maintenanceService.create(createMaintenanceDto)
   }
 
-  @Get(':status')
+  @Get()
   @Render('admin/maintenance/maintenance')
-  async findAll (@Param('status') status: string) {
-    const maintenances = await this.maintenanceService.findAll(status)
-    let heading = ''
-    if (status == 'tat-ca') {
-      heading = 'tất cả'
-    } else if (status == 'sap-toi') {
-      heading = 'sắp tới'
-    } else if (status == 'dang-bao-tri') {
-      heading = 'đang bảo trì'
-    }
-
-    return { heading, maintenances, activeMenu: 'maintenance' }
+  async findAll () {
+    const maintenances = await this.maintenanceService.findAll()
+    return { maintenances, activeMenu: 'maintenance' }
   }
 
   @Get('project/:idProject')
@@ -47,8 +40,9 @@ export class MaintenanceController {
     const maintenanceWProjects = await this.maintenanceService.findAllWProject(
       +idProject,
     )
+    const staffs = await this.staffsService.findAll()
     const project = await this.projectService.findOne(+idProject)
-    return { project, maintenanceWProjects, activeMenu: 'maintenance' }
+    return { staffs, project, maintenanceWProjects, activeMenu: 'maintenance' }
   }
 
   @Patch(':id')

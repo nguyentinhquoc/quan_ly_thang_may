@@ -5,7 +5,7 @@ export class CreateMaintenanceDto {
   @IsString()
   @IsNotEmpty()
   time: string
-
   @IsNotEmpty()
   project: Project
+  reason: string
 }

@@ -42,6 +42,7 @@ import { Notification } from './notification/entities/notification.entity'
 import { Maintenance } from './maintenance/entities/maintenance.entity'
 import { MaintenanceModule } from './maintenance/maintenance.module'
 import { MaintenanceActionsModule } from './maintenance_actions/maintenance_actions.module';
+import { MaintenanceAction } from './maintenance_actions/entities/maintenance_action.entity'
 
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import { MaintenanceActionsModule } from './maintenance_actions/maintenance_acti
           ProjectEdit,
           Notification,
           Maintenance,
+          MaintenanceAction,
         ],
         synchronize: true,
       }),

@@ -72,7 +72,6 @@
     });
     $('.delete-btn').click(function() {
       if (confirm('Bạn có chắc chắn muốn xóa phòng ban này không?')) {
-
         var row = $(this).closest('tr');
         var id = row.data('id');
         $.ajax({
