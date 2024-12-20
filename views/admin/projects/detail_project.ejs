@@ -1,0 +1,210 @@
+<%- include('../../layout/header') %>
+<h2 class="m-b-30">Chi tiết dự án</h2>
+<% function formatDate(dateString) { const date=new Date(dateString); const
+day=String(date.getDate()).padStart(2, '0' ); const month=String(date.getMonth()
++ 1).padStart(2, '0' ); const year=date.getFullYear(); const
+hours=String(date.getHours()).padStart(2, '0' ); const
+minutes=String(date.getMinutes()).padStart(2, '0' ); const
+seconds=String(date.getSeconds()).padStart(2, '0' ); return
+`${day}/${month}/${year} ${hours}:${minutes}:${seconds}`; } %>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .timeline {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .timeline-event {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+
+  .timeline-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #4caf50;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    font-size: 20px;
+    margin-right: 20px;
+  }
+
+  .timeline-icon-none {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #aea0a0;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    font-size: 20px;
+    margin-right: 20px;
+  }
+
+  .timeline-content {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1;
+  }
+
+  .timeline-date {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .timeline-description {
+    margin-bottom: 0;
+  }
+
+  .btn-complete {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+<form action="/project/<%= project.id %>?_method=Patch" method="POST" id="FormAdd">
+  <div class="row  m-t-15 m-b-15">
+    <div class="col-lg-7">
+      <section class="card">
+        <div class="card-body text-secondary">
+          <div class="form-group">
+            <label for="full_name ">Tên khách hàng <span style="color: red">*</span></label>
+            <input type="text" id="full_name" name="full_name" class="form-control" required maxlength="255" value="<%= project.full_name %>" disabled />
+          </div>
+          <div class="form-group">
+            <label for="number_phone">Số điện thoại <span style="color: red">*</span></label>
+            <input type="tel" id="number_phone" name="number_phone" class="form-control" required maxlength="15" value="<%= project.number_phone %>" disabled />
+            <input type="hidden" name="phone_old" value="<%= project.number_phone %>" />
+          </div>
+          <div class="form-group">
+            <label for="email">Địa chỉ email</label>
+            <input type="email" id="email" name="email" class="form-control" maxlength="255" value="<%= project.email %>" disabled />
+          </div>
+          <div class="form-group">
+            <label for="address">Địa chỉ lắp đặt <span style="color: red">*</span></label>
+            <textarea id="address" name="address" class="form-control" disabled>
+<%= project.address %> </textarea>
+          </div>
+          <div class="form-group">
+            <label for="description">Ghi chú</label>
+            <textarea id="description" name="description" class="form-control" maxlength="225" disabled>
+          <%= project.description %></textarea>
+          </div>
+          <div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Thông tin</th>
+                  <th scope="col">Giá trị</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Động cơ</td>
+                  <td><%= project.infor_product.dongCo %></td>
+                </tr>
+                <tr>
+                  <td>Công suất</td>
+                  <td><%= project.infor_product.congSuat %></td>
+                </tr>
+                <tr>
+                  <td>Tủ điện</td>
+                  <td><%= project.infor_product.tuDien %></td>
+                </tr>
+                <tr>
+                  <td>Cáp Tải</td>
+                  <td><%= project.infor_product.capTai %></td>
+                </tr>
+                <tr>
+                  <td>Hố thang</td>
+                  <td><%= project.infor_product.hoThang %></td>
+                </tr>
+                <tr>
+                  <td>Cabin</td>
+                  <td><%= project.infor_product.cabin %></td>
+                </tr>
+                <tr>
+                  <td>Cửa</td>
+                  <td><%= project.infor_product.cua %></td>
+                </tr>
+                <tr>
+                  <td>Pít</td>
+                  <td><%= project.infor_product.pit %></td>
+                </tr>
+                <tr>
+                  <td>OH</td>
+                  <td><%= project.infor_product.oh %></td>
+                </tr>
+                <tr>
+                  <td>Bảo hành</td>
+                  <td><%= project.infor_product.baoHanh %></td>
+                </tr>
+                <tr>
+                  <td>Bảo trì</td>
+                  <td><%= project.infor_product.baoTri %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="col-lg-5 card">
+      <div class="timeline w-100">
+        <% let displayedIds=new Set(); projectSteps.forEach(function(step) { if
+        (!displayedIds.has(step.workflowStep.id)) {
+        displayedIds.add(step.workflowStep.id); %>
+        <div class="timeline-event">
+          <div class="timeline-icon<%= step.status == 0 ? '-none': '' %>">
+            ✔
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-date"><%= formatDate(step.time) %></div>
+            <div class="timeline-description">
+              <%= step.step.name %>
+              <p style="opacity: 0.5"><%= step.step.description %></p>
+              <div class="d-flex justify-content-between">
+                <img src="/images/bg-title-01.jpg" alt="" width="50px">
+                <img src="/images/bg-title-01.jpg" alt="" width="50px">
+                <img src="/images/bg-title-01.jpg" alt="" width="50px">
+                <img src="/images/bg-title-01.jpg" alt="" width="50px">
+              </div>
+              <p>Đã hoàn thiện tuy nhiên khách chưa ưng lắm</p>
+              <div style="text-align: end">
+                <% projectSteps.filter(s => s.workflowStep.id ===
+                step.workflowStep.id).forEach(s => { %>
+                <div>
+                  <%= s.staff.full_name %>
+                  <img width="20px" height="20px" style="border-radius: 50%" src="/images/avatar/<%= s.staff.avatar %>" alt />
+                </div>
+                <% }); %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } }); %>
+      </div>
+    </div>
+  </div>
+  <section class="card"></section>
+</form>
+
+<%- include('../../layout/footer') %>

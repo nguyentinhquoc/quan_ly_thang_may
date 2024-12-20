@@ -1,0 +1,26 @@
+[
+  {
+    "color": "red",
+    "type": "fox",
+    "size": "nano",
+    "name": "Rowan"
+  },
+  {
+    "color": "white",
+    "type": "fox",
+    "size": "nano",
+    "name": "Rosy"
+  },
+  {
+    "color": "gray",
+    "type": "totoro",
+    "size": "nano",
+    "name": "Totoro"
+  },
+  {
+    "color": "green",
+    "type": "snake",
+    "size": "nano",
+    "name": "Slytherin"
+  }
+]
