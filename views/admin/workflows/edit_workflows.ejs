@@ -15,37 +15,42 @@
   .empty-message {
     height: 30px;
   }
-  .search{
+
+  .search {
     display: inline-block;
     border: 1px solid gray;
     padding: 6px;
     border-radius: 5px;
 
   }
-  .mt{
+
+  .mt {
     margin-top: -5px;
   }
+
   @media (max-width: 991px) {
-  .fixed {
-    position: relative;
-    width: 100%;
-  }}
-  @media (max-width: 1100px) {
-  .search{
-    width: 70%;
+    .fixed {
+      position: relative;
+      width: 100%;
+    }
   }
+
+  @media (max-width: 1100px) {
+    .search {
+      width: 70%;
+    }
   }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#unused-items li").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  $(document).ready(function() {
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#unused-items li").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
     });
   });
-});
 </script>
 <div class="row item-list">
   <div class="col-lg-4">
@@ -62,9 +67,9 @@ $(document).ready(function(){
       </div>
       <ul id="unused-items">
         <% NonePickerIn.forEach(function(step) { %>
-        <li class="card-body text-light m-b-15 btn-primary" draggable="true"><input
-            type="hidden" name="listStep[]" value="<%= step.id %>"> <%= step.name %><br>
-          <span style="opacity: 0.5;"> <%= step.description %></span></li>
+        <li class="card-body text-light m-b-15 btn-primary" draggable="true"><input type="hidden" name="listStep[]" value="<%= step.id %>"> <%= step.name %><br>
+          <span style="opacity: 0.5;"> <%= step.description %></span>
+        </li>
         <% }); %>
       </ul>
     </section>
@@ -77,9 +82,9 @@ $(document).ready(function(){
             <h5> Quy trình hiện tại: </h5>
             <li style="height: 30px; list-style: none;"></li>
             <% PickerIn.forEach(function(step) { %>
-            <li class="card-body text-light m-b-15 btn-primary" draggable="true"><input
-                type="hidden" name="listStep[]" value="<%= step.id %>"> <%= step.name %>
-              <br> <span style="opacity: 0.5;"> <%= step.description %></span></li>
+            <li class="card-body text-light m-b-15 btn-primary" draggable="true"><input type="hidden" name="listStep[]" value="<%= step.id %>"> <%= step.name %>
+              <br> <span style="opacity: 0.5;"> <%= step.description %></span>
+            </li>
             <% }); %>
             <li class="card-body text-light m-b-15 empty-message"></li>
           </ul>
@@ -88,8 +93,7 @@ $(document).ready(function(){
             <div class>
               <p class="btn btn-danger m-t-15 " onclick="window.location.reload();">Đặt
                 lại</p>
-              <input class="btn btn-info " type="submit" value="Lưu quy trình"
-                id="save-workflow" />
+              <input class="btn btn-info " type="submit" value="Lưu quy trình" id="save-workflow" />
             </div>
           </div>
         </div>
