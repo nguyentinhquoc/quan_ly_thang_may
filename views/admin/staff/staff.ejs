@@ -10,7 +10,7 @@
     </div>
     <div class="row justify-content-end g-0">
       <div class="col-auto col-sm-5 mb-3">
-       
+
         <form>
 
           <div class="input-group"><input class="form-control form-control-sm shadow-none search" type="search" placeholder="Search..." aria-label="search" />
@@ -34,18 +34,18 @@
           <% staffs.forEach(function(staff, key) { %>
           <tr data-id="<%= staff.id %>" data-name="<%= staff.name %>" data-description="<%= staff.description %>">
             <td class="name">
-             
+
                   <%= staff.full_name %>
             </td>
             <td class="phone"><%= staff.number_phone  %></td>
             <td class="email"><%= staff.email %></td>
             <td class="trangthai">
-              
+
                 <span class="<%= staff.status == 1 ? 'btn-falcon-success me-1 mb-1 p-1' : 'btn-falcon-danger me-1 mb-1' %>">
                   <%= staff.status == 1 ? 'Đã kích hoạt' : 'Chưa kích hoạt' %>
                 </span>
-            
-              
+
+
             </td>
             <td class="action">
              <div class="table-data-feature">
@@ -57,7 +57,7 @@
           </tr>
           <tr class="spacer"></tr>
           <% }); %>
-          
+
         </tbody>
       </table>
       

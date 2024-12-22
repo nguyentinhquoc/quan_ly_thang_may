@@ -3640,7 +3640,9 @@ progress {
   -webkit-margin-end: 0.75rem;
   margin-inline-end: 0.75rem;
 }
-
+.item {
+  cursor: pointer;
+}
 .form-control-lg {
   min-height: calc(1.5em + 0.75rem + calc(var(--falcon-border-width) * 2));
   padding: 0.375rem 1.25rem;

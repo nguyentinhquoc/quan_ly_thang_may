@@ -1,19 +1,18 @@
-import { IsString, IsNotEmpty, IsInt } from 'class-validator';
-import { Project } from 'src/project/entities/project.entity';
-import { Staff } from 'src/staffs/entities/staff.entity';
+import { IsString, IsNotEmpty, IsInt } from 'class-validator'
+import { Project } from 'src/project/entities/project.entity'
+import { Staff } from 'src/staffs/entities/staff.entity'
 
 export class CreateNotificationDto {
   @IsString()
   @IsNotEmpty()
-  title: string;
+  title: string
 
   @IsString()
   @IsNotEmpty()
-  message: string;
+  message: string
 
   @IsNotEmpty()
-  staff: Staff;
+  staff: Staff
   @IsNotEmpty()
-  project: Project;
+  project: Project
 }
-
