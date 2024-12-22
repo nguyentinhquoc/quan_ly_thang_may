@@ -1,44 +1,61 @@
 <%- include('../../layout/header') %>
-<div class="row">
-  <div class="col-md-12">
-    <div class="m-b-30">
-      <button type="button" class="btn text thead-backgroup" id="add-new-position"> <i class="fas fa-plus-square"></i>&nbsp; Thêm mới</button>
+
+<div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-da4be276-f13c-47d6-be82-655bc6452fd5" id="dom-da4be276-f13c-47d6-be82-655bc6452fd5">
+  <div id="tableExample3" data-list='{"valueNames":["chucvu","mota","action"],"page":5,"pagination":true}'>
+    <div class="row justify-content-end g-0">
+      <div class="col-auto col-sm-5 mb-3">
+       
+        <form>
+
+          <div class="input-group"><input class="form-control form-control-sm shadow-none search" type="search" placeholder="Search..." aria-label="search" />
+            <div class="input-group-text bg-transparent"><span class="fa fa-search fs-10 text-600"></span></div>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="table-responsive table--no-card m-b-30">
-      <table class="table table-borderless table-data3">
-        <thead>
-          <tr class="thead-backgroup">
-            <th>STT</th>
-            <th>Tên chức vụ</th>
-            <th>Mô tả</th>
-            <th>Tương tác</th>
+    <div class="table-responsive scrollbar">
+      <table class="table table-bordered table-striped fs-10 mb-0">
+        <thead class="bg-200">
+          <tr>
+            <th class="text-900 sort" data-sort="chucvu">Tên Tên chức vụ</th>
+            <th class="text-900 sort" data-sort="mota">Mô tả</th>
+            <th class="text-900 sort" data-sort="action">Tương tác</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="list">
           <% positions.forEach(function(position, key) { %>
-          <tr class="tr-shadow" data-id="<%= position.id %>" data-name="<%= position.name %>" data-description="<%= position.description %>">
-            <td><%= key + 1 %></td>
-            <td><span class="block-email"><%= position.name %></span></td>
-            <td class="desc"><%= position.description %></td>
-            <td>
-              <div class="table-data-feature">
-                <!-- Nút Edit để kích hoạt Modal -->
-                <button class="item edit-btn" data-toggle="tooltip" data-placement="top" title="Edit">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button class="item delete-btn" data-toggle="tooltip" data-placement="top" title="Delete">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
+          <tr data-id="<%= position.id %>" data-name="<%= position.name %>" data-description="<%= position.description %>">
+            <td class="chucvu"><%= position.name %></td>
+            <td class="mota"><%= position.description %></td>
+            <td class="action">
+             <div class="table-data-feature">
+                <a class="item edit-btn btn-primary m-1" data-toggle="tooltip" data-placement="top" title="Edit">
+                  <i class="fas fa-edit "></i>
+                </a>
+                <a class="item delete-btn btn-danger m-1" data-toggle="tooltip" data-placement="top" title="Delete">
+                  <i class="fas fa-trash-alt "></i>
+                </a>
               </div>
             </td>
           </tr>
           <tr class="spacer"></tr>
           <% }); %>
+          
         </tbody>
       </table>
+      <div class="m-b-30">
+        <button type="button" class="btn btn-primary me-1 mb-1 mt-2" id="add-new-position"> <i class="fas fa-plus-square"></i>&nbsp; Thêm mới</button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-3"><button class="btn btn-sm btn-falcon-default me-1" type="button" title="Previous" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
+      <ul class="pagination mb-0"></ul><button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Next" data-list-pagination="next"><span class="fas fa-chevron-right"> </span></button>
     </div>
   </div>
 </div>
+
+
+
+
 
 <script>
   $(document).ready(function() {
@@ -82,7 +99,10 @@
         '<label for="description">Mô tả:</label>' +
         '<textarea class="form-control" id="description" name="description"></textarea>' +
         '</div>' +
-        '<button type="submit" class="btn btn-primary">Thêm mới</button>' +
+        '<div class="form-group">' +
+        '<button class="btn btn-secondary mt-1" type="button" data-bs-dismiss="modal">Đóng</button>' +
+        '<button type="submit" class="btn btn-primary me-1 mb-1 mt-2 m-2">Thêm mới</button>' +
+        '</div>' +
         '</form>' +
         '</div>' +
         '</div>' +
@@ -122,7 +142,10 @@
         '<label for="edit-description">Mô tả:</label>' +
         '<textarea class="form-control" id="edit-description" name="description">' + description + '</textarea>' +
         '</div>' +
-        '<button type="submit" class="btn btn-primary">Lưu thay đổi</button>' +
+        '<div class="form-group">' +
+        '<button class="btn btn-secondary mt-1" type="button" data-bs-dismiss="modal">Đóng</button>' +
+        '<button type="submit" class="btn btn-primary me-1 mb-1 mt-2 m-2">Lưu thay đổi</button>' +
+        '</div>' +
         '</form>' +
         '</div>' +
         '</div>' +

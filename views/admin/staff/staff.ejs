@@ -1,53 +1,79 @@
 <%- include('../../layout/header') %>
-<div class="row">
-  <div class="col-md-12">
-    <div class="m-b-30">
-      <a href="/staffs/add" type="button" class="btn btn-primary" id="add-new-position"> <i class="fas fa-plus-square"></i>&nbsp; Thêm mới</a>
+
+
+
+<div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-da4be276-f13c-47d6-be82-655bc6452fd5" id="dom-da4be276-f13c-47d6-be82-655bc6452fd5">
+  <h4>Danh sách nhân viên</h4>
+  <div id="tableExample3" data-list='{"valueNames":["name","phone","mail","trangthai","action"],"page":5,"pagination":true}'>
+    <div class="row justify-content-end g-0">
+      <div class="col-auto col-sm-5 mb-3">
+       
+        <form>
+
+          <div class="input-group"><input class="form-control form-control-sm shadow-none search" type="search" placeholder="Search..." aria-label="search" />
+            <div class="input-group-text bg-transparent"><span class="fa fa-search fs-10 text-600"></span></div>
+          </div>
+        </form>
+      </div>
     </div>
- <div class="table-responsive table--no-card m-b-30">
-      <table class="table table-hover table-borderless table-data3">
-        <thead >
-          <tr class="thead-backgroup">
-            <th>STT</th>
-            <th>Họ và tên</th>
-            <th>Số điện thoại</th>
-            <th>Email</th>
-            <th>Trạng thái</th>
-            <th>Tương tác</th>
+    <div class="table-responsive scrollbar">
+      <table class="table table-bordered table-striped fs-10 mb-0">
+        <thead class="bg-200">
+          <tr>
+            <th class="text-900 sort" data-sort="name">Tên phòng ban</th>
+            <th class="text-900 sort" data-sort="phone">Số điện thoại</th>
+            <th class="text-900 sort" data-sort="mail">Email</th>
+            <th class="text-900 sort" data-sort="trang thai">Trạng thái</th>
+            <th class="text-900 sort" data-sort="action">Tương tác</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="list">
           <% staffs.forEach(function(staff, key) { %>
-          <tr class="tr-shadow" data-id="<%= staff.id %>" data-name="<%= staff.name %>" data-description="<%= staff.description %>">
-            <td><%= key + 1 %></td>
-            <td>
-              <span class="block-email">
-                  <img src="/images/avatar/<%= staff.avatar %>" alt="" width="30px" height="30px" style="border-radius: 50%; height: 50px;">
+          <tr data-id="<%= staff.id %>" data-name="<%= staff.name %>" data-description="<%= staff.description %>">
+            <td class="name">
+             
                   <%= staff.full_name %>
-              </span>
-          </td>
-          
-            <td class="desc"><%= staff.number_phone  %></td>
-            <td class="desc"><%= staff.email %></td>
-            <td class="desc"><%= staff.status   %></td>
-            <td>
-              <div class="table-data-feature">
-                <!-- Nút Edit để kích hoạt Modal -->
-                <button class="item edit-btn" data-toggle="tooltip" data-placement="top" title="Edit">
-                  <i class="fas fa-edit"></i>
-                   <button class="item delete-btn" data-toggle="tooltip" data-placement="top" title="Delete">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
+            </td>
+            <td class="phone"><%= staff.number_phone  %></td>
+            <td class="email"><%= staff.email %></td>
+            <td class="trangthai">
+              
+                <span class="<%= staff.status == 1 ? 'btn-falcon-success me-1 mb-1 p-1' : 'btn-falcon-danger me-1 mb-1' %>">
+                  <%= staff.status == 1 ? 'Đã kích hoạt' : 'Chưa kích hoạt' %>
+                </span>
+            
+              
+            </td>
+            <td class="action">
+             <div class="table-data-feature">
+              <a
+              class="item delete-btn " data-toggle="tooltip" data-placement="top" title="Delete"
+              >
+                  <i class="fas fa-trash-alt "></i>
+             </a>
               </div>
             </td>
           </tr>
           <tr class="spacer"></tr>
           <% }); %>
+          
         </tbody>
       </table>
+      <div class="m-b-30">
+        <a href="/staffs/add" type="button" class="btn btn-primary" id="add-new-position"> <i class="fas fa-plus-square"></i>&nbsp; Thêm mới</a>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-3"><button class="btn btn-sm btn-falcon-default me-1" type="button" title="Previous" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
+      <ul class="pagination mb-0"></ul><button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Next" data-list-pagination="next"><span class="fas fa-chevron-right"> </span></button>
     </div>
   </div>
 </div>
+
+
+
+
+
+
 <script>
   $('.delete-btn').click(function() {
       if (confirm('Bạn có chắc chắn muốn xóa nhân viên này không?')) {
