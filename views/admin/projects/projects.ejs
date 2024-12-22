@@ -1,54 +1,81 @@
 <%- include('../../layout/header') %>
-<div class="row">
-  <div class="col-md-12">
+
+
+<div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-da4be276-f13c-47d6-be82-655bc6452fd5" id="dom-da4be276-f13c-47d6-be82-655bc6452fd5">
+  <h4 class="mt-3">Danh sách Dự án</h4>
+  
+  <div id="tableExample3" data-list='{"valueNames":["idProject","name","phone","address","trangthai","time","action"],"page":20,"pagination":true}'>
     <div class="m-b-30">
       <a href="project/add" type="button" class="btn btn-primary thead-backgroup" id="add-new-project"> <i class="fas fa-plus-square"></i>&nbsp; Thêm mới</a>
     </div>
-    <div class="table-responsive table-responsive-data2">
-      <table class="table table-hover table-borderless table-data2">
-        <thead>
-          <tr class="thead-backgroup text">
-            <th>STT</th>
-            <th>Mã dự án</th>
-            <th>Tên khách hàng</th>
-            <th>Số điện thoại</th>
-            <th>Địa chỉ</th>
-            <th>Trạng thái</th>
-            <th>Thời hạn bảo hành</th>
-            <th>Tương tác</th>
+    <div class="row justify-content-end g-0">
+
+      <div class="col-auto col-sm-5 mb-3">
+       
+        <form>
+
+          <div class="input-group"><input class="form-control form-control-sm shadow-none search" type="search" placeholder="Search..." aria-label="search" />
+            <div class="input-group-text bg-transparent"><span class="fa fa-search fs-10 text-600"></span></div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="table-responsive scrollbar">
+      <table class="table table-bordered table-striped fs-10 mb-0">
+        <thead class="bg-200">
+          <tr>
+            <th class="text-900 sort" data-sort="idProject">Mã dự án</th>
+            <th class="text-900 sort" data-sort="name">Tên khách hàng</th>
+            <th class="text-900 sort" data-sort="phone">Số điện thoại</th>
+            <th class="text-900 sort" data-sort="address">Địa chỉ</th>
+            <th class="text-900 sort" data-sort="trangthai">Trạng thái</th>
+            <th class="text-900 sort" data-sort="time">Thời hạn BH</th>
+            <th class="text-900 sort" data-sort="action">Tương tác</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="list">
           <% projects.forEach(function(project, key) { %>
-          <tr class="tr-shadow" data-id="<%= project.id %>" data-name="<%= project.name %>" data-description="<%= project.description %>">
-            <td><%= key + 1 %></td>
-            <td><%= project.id %></td>
-            <td><span class="block-email"><%= project.full_name %></span></td>
-            <td class="desc"><%= project.number_phone %></td>
-            <td class="desc"><%= project.address %></td>
-            <td class="desc"><%= project.status == 0 ? 'Đang trong quá trình' : 'Đã xong' %></td>
-            <td><%= project.infor_product.baoHanh %></td>
-            <td>
-              <div class="table-data-feature">
-                <a href="/project/<%= project.id %>" class="item edit-btn" data-toggle="tooltip" data-placement="top" title="Edit">
-                  <i class="fas fa-edit"></i>
+            <tr data-id="<%= project.id %>" data-name="<%= project.name %>" data-description="<%= project.description %>">
+            <td class="idProject"><%= project.id %></td>
+            <td class="name"><%= project.full_name %></td>
+            <td class="phone"><%= project.number_phone %></td>
+            <td class="address"><%= project.address %></td>
+            <td class="trangthai">
+              <span class="<%= project.status == 0 ? 'text-success' : 'text-danger' %>">
+                <%= project.status == 0 ? 'Đã xong' : 'Đang trong quá trình' %>
+              </span>
+            </td>
+            <td class="time"><%= project.baoHanh %></td>
+            <td class="action">
+             <div class="table-data-feature">
+                <a  href="/project/<%= project.id %>" class="item edit-btn btn-primary m-1 " data-toggle="tooltip" data-placement="top" title="Edit">
+                  <i class="fas fa-edit "></i>
                 </a>
                 <a href="/project/detail/<%= project.id %>" class="item" data-toggle="tooltip" data-placement="top" title data-original-title="Chi tiết">
                   <i class="fas fa-info-circle"></i>
                 </a>
-                <a href="maintenance/project/<%= project.id %>" class="item" data-toggle="tooltip" data-placement="top" title data-original-title="Bảo trì">
+                <a href="maintenance/project/<%= project.id %>" class="item delete-btn btn-danger m-1" data-toggle="tooltip" data-placement="top" title="Delete">
                   <i class="fas fa-wrench"></i>
-                </a>
 
+                </a>
               </div>
             </td>
           </tr>
           <tr class="spacer"></tr>
           <% }); %>
+          
         </tbody>
       </table>
     </div>
+    <div class="d-flex justify-content-center mt-3"><button class="btn btn-sm btn-falcon-default me-1" type="button" title="Previous" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
+      <ul class="pagination mb-0"></ul><button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Next" data-list-pagination="next"><span class="fas fa-chevron-right"> </span></button>
+    </div>
   </div>
 </div>
+
+
+
+
+
 
 <%- include('../../layout/footer') %>

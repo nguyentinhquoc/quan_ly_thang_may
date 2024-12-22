@@ -4,7 +4,10 @@
 
 <div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-da4be276-f13c-47d6-be82-655bc6452fd5" id="dom-da4be276-f13c-47d6-be82-655bc6452fd5">
   <h4>Danh sách nhân viên</h4>
-  <div id="tableExample3" data-list='{"valueNames":["name","phone","mail","trangthai","action"],"page":5,"pagination":true}'>
+  <div id="tableExample3" data-list='{"valueNames":["name","phone","mail","trangthai","action"],"page":20,"pagination":true}'>
+    <div class="m-b-30">
+      <a href="/staffs/add" type="button" class="btn btn-primary" id="add-new-position"> <i class="fas fa-plus-square"></i>&nbsp; Thêm mới</a>
+    </div>
     <div class="row justify-content-end g-0">
       <div class="col-auto col-sm-5 mb-3">
        
@@ -46,11 +49,9 @@
             </td>
             <td class="action">
              <div class="table-data-feature">
-              <a
-              class="item delete-btn " data-toggle="tooltip" data-placement="top" title="Delete"
-              >
-                  <i class="fas fa-trash-alt "></i>
-             </a>
+              <a class="item delete-btn btn-danger m-1" data-toggle="tooltip" data-placement="top" title="Delete">
+                <i class="fas fa-trash-alt "></i>
+              </a>
               </div>
             </td>
           </tr>
@@ -59,9 +60,7 @@
           
         </tbody>
       </table>
-      <div class="m-b-30">
-        <a href="/staffs/add" type="button" class="btn btn-primary" id="add-new-position"> <i class="fas fa-plus-square"></i>&nbsp; Thêm mới</a>
-      </div>
+      
     </div>
     <div class="d-flex justify-content-center mt-3"><button class="btn btn-sm btn-falcon-default me-1" type="button" title="Previous" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
       <ul class="pagination mb-0"></ul><button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Next" data-list-pagination="next"><span class="fas fa-chevron-right"> </span></button>
