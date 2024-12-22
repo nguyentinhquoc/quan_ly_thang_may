@@ -222,11 +222,10 @@
 <div class="row">
   <div class="col-md-12 card p-3">
     <div class="m-b-30">
-      <h2>
-        Danh sách thời gian bảo trì
-      </h2>
+      <h2>Danh sách thời gian bảo trì</h2>
       <p>Chủ dự án: <%= project.full_name %></p>
-      <button class="btn btn-primary mt-3 mb-3" id="add-maintenance">+ Thêm bảo trì
+      <button class="btn btn-primary mt-3 mb-3" id="add-maintenance">
+        + Thêm bảo trì
       </button>
       <table class="table">
         <tr>
@@ -241,50 +240,60 @@
           <td><%=item.time%></td>
           <td>
             <% item.maintenanceActions.forEach(function(action) { %>
-            <img src="/images/avatar/<%=  action.staff.avatar %>" alt height="30px"
-              width="30px" style="border-radius: 50%;">
+            <img src="/images/avatar/<%=  action.staff.avatar %>" alt height="30px" width="30px" style="border-radius: 50%" />
             <%= action.staff.full_name %>
-            <br>
-            <br>
+            <br />
+            <br />
             <% }) %>
-            <p class="btn btn-primary add-staff" idValue="<%=item.id%>">+ Thêm nhân
-              viên</p>
+            <p class="btn btn-primary add-staff" idValue="<%=item.id%>">
+              + Thêm nhân viên
+            </p>
           </td>
-          <td style="width: fit-content;">
-            <p style="width: fit-content;" id="maintenance-<%= index %>"
-              class="alert fade alert-simple alert-<%= item.timeSuccess ? 'info' : 'success' %> alert-dismissible text-left font__size-16 font__weight-light brk-library-rendered rendered show">
-              <span class="font__weight-semibold" style="background-color: red;"> Thể hiện
-                trạng thái</span>
+          <td style="width: fit-content">
+            <p style="width: fit-content" id="maintenance-<%= index %>" class="alert fade alert-simple alert-<%= item.timeSuccess ? 'info' : 'success' %> alert-dismissible text-left font__size-16 font__weight-light brk-library-rendered rendered show">
+             <% if (item.maintenanceActions.length === 0) { %>
+    Chưa bảo trì
+<% } else {
+    let allCompleted = item.maintenanceActions.every(function(action) { return action.status == 1; });
+%>
+    <% if(allCompleted) { %>
+        Đã hoàn thành
+    <% } else { %>
+        Chưa hoàn thành
+    <% } %>
+<% } %>
+
             </p>
           </td>
         </tr>
         <% }); %>
       </table>
-      <div class="row">
-      </div>
+      <div class="row"></div>
     </div>
   </div>
 </div>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const today = new Date();
-    const threeDaysFromNow = new Date(today);
-    threeDaysFromNow.setDate(today.getDate() + 3);
-    const maintenanceWProjects = JSON.parse('<%- JSON.stringify(maintenanceWProjects) %>')
+  document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date()
+    const threeDaysFromNow = new Date(today)
+    threeDaysFromNow.setDate(today.getDate() + 3)
+    const maintenanceWProjects = JSON.parse(
+      '<%- JSON.stringify(maintenanceWProjects) %>',
+    )
     maintenanceWProjects.forEach(function(item, index) {
-      const itemDate = new Date(item.time);
-      const element = document.getElementById(`maintenance-${index}`);
+      const itemDate = new Date(item.time)
+      const element = document.getElementById(`maintenance-${index}`)
       if (itemDate >= today && itemDate <= threeDaysFromNow) {
-        element.classList.add("alert-warning");
+        element.classList.add('alert-warning')
       }
-    });
-  });
+    })
+  })
   $(document).ready(function() {
     $('.add-staff').click(function() {
-      $('#newPositionModal').remove();
-      var id = $(this).attr('idValue');
+      $('#newPositionModal').remove()
+      var id = $(this).attr('idValue')
       var form =
-        '<form action="/maintenance-actions" method="POST" class="modal fade" id="newPositionModal" tabindex="-1" aria-labelledby="newPositionModalLabel" aria-hidden="true">' +
+        '<form action="/maintenance-actions/<%= project.id %>" method="POST" class="modal fade" id="newPositionModal" tabindex="-1" aria-labelledby="newPositionModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog">' +
         '<div class="modal-content">' +
         '<div class="modal-header">' +
@@ -318,20 +327,21 @@
       '</div>' +
       '</div>' +
       '</div>' +
-      '</div>';
-      $('body').append(form);
-      $('#newPositionModal').modal('show');
-      $('#date-time').val('');
-      $('#staff-search').val('');
-    });
+      '</div>'
+      $('body').append(form)
+      $('#newPositionModal').modal('show')
+      $('#date-time').val('')
+      $('#staff-search').val('')
+    })
     $('#add-maintenance').click(function() {
-      $('#newPositionModal').remove();
-      var id = $(this).attr('idValue');
+      $('#newPositionModal').remove()
+      var id = $(this).attr('idValue')
       var form =
         '<form action="/maintenance" method="POST" class="modal fade" id="newPositionModal" tabindex="-1" aria-labelledby="newPositionModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog">' +
         '<div class="modal-content">' +
         '<div class="modal-header">' +
+        '<input type="hidden" id="staffId" name="project" value= "<%= project.id %>">' +
         '<div class="d-flex justify-content-between w-100" >' +
         `<h5 class="modal-title" id="newPositionModalLabel">Chọn người bảo trì</h5>` +
         '<button class="btn btn-success clickXN" disable onclick="clickXN()" disabled>Xác nhận</button>' +
@@ -359,55 +369,57 @@
       '</div>' +
       '</div>' +
       '</div>' +
-      '</div>';
-      $('body').append(form);
-      $('#newPositionModal').modal('show');
-      $('#date-time').val('');
-      $('#staff-search').val('');
-    });
+      '</div>'
+      $('body').append(form)
+      $('#newPositionModal').modal('show')
+      $('#date-time').val('')
+      $('#staff-search').val('')
+    })
   })
 
   function pushStaff(value, id) {
     if ($('#date-time').val() != '') {
-      $('.clickXN').prop('disabled', false);
-      $('#staffId').attr('value', id);
+      $('.clickXN').prop('disabled', false)
+      $('#staffId').attr('value', id)
     } else {
-      $('.clickXN').prop('disabled', true);
+      $('.clickXN').prop('disabled', true)
     }
-    document.getElementById('staff-search').value = value;
-    document.getElementById('itemList').style.display = "none";
+    document.getElementById('staff-search').value = value
+    document.getElementById('itemList').style.display = 'none'
   }
-function onpenSubmit(){
-      $('.clickXN').prop('disabled', false);
-}
+
+  function onpenSubmit() {
+    $('.clickXN').prop('disabled', false)
+  }
+
   function filterList() {
-    document.getElementById('itemList').style.display = "block"
-    var input = document.getElementById('staff-search').value.toLowerCase();
-    var items = document.getElementById('itemList').getElementsByTagName('li');
-    var list = document.getElementById('itemList');
+    document.getElementById('itemList').style.display = 'block'
+    var input = document.getElementById('staff-search').value.toLowerCase()
+    var items = document.getElementById('itemList').getElementsByTagName('li')
+    var list = document.getElementById('itemList')
     console.log(input)
     if (input) {
-      list.style.display = "block";
+      list.style.display = 'block'
     } else {
-      list.style.display = "none";
+      list.style.display = 'none'
     }
     for (var i = 0; i < items.length; i++) {
-      var itemText = items[i].textContent || items[i].innerText;
-      var dataId = $(items[i]).attr('data-id');
-      var stepId = $(items[i]).attr('data-stepId');
+      var itemText = items[i].textContent || items[i].innerText
+      var dataId = $(items[i]).attr('data-id')
+      var stepId = $(items[i]).attr('data-stepId')
       if (itemText.toLowerCase().includes(input)) {
-        items[i].style.display = "";
+        items[i].style.display = ''
       } else {
-        items[i].style.display = "none";
+        items[i].style.display = 'none'
       }
     }
   }
 
   function changeDate() {
     if ($('#date-time').val() != '') {
-      $('#staff-search').prop('disabled', false);
+      $('#staff-search').prop('disabled', false)
     } else {
-      $('#staff-search').prop('disabled', true);
+      $('#staff-search').prop('disabled', true)
     }
   }
 </script>

@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   Render,
+  Res,
 } from '@nestjs/common'
 import { MaintenanceService } from './maintenance.service'
 import { CreateMaintenanceDto } from './dto/create-maintenance.dto'
 import { UpdateMaintenanceDto } from './dto/update-maintenance.dto'
 import { ProjectService } from 'src/project/project.service'
 import { StaffsService } from 'src/staffs/staffs.service'
+import { Response } from 'express'
 
 @Controller('maintenance')
 export class MaintenanceController {
@@ -23,8 +25,9 @@ export class MaintenanceController {
   ) {}
 
   @Post()
-  create (@Body() createMaintenanceDto: CreateMaintenanceDto) {
-    return this.maintenanceService.create(createMaintenanceDto)
+  async create (@Res() res: Response,@Body() createMaintenanceDto: CreateMaintenanceDto) {
+    await this.maintenanceService.create(createMaintenanceDto)
+    return res.redirect('back')
   }
 
   @Get()

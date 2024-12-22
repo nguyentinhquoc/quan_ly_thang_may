@@ -18,19 +18,34 @@
         <tbody>
           <% maintenances.forEach(function(maintenance, key) { %>
           <tr class="tr-shadow">
-            <td><%= key + 1 %></td>
-            <td><span class="block-email"><%= maintenance.project.full_name %></span></td>
-            <td class="desc"><%= maintenance.time %></td>
-            <td><span class="block-email" style="background-color: red;">Thể hiện trạng thái</span></td>
+            <td>
+              <%= key + 1 %>
+            </td>
+            <td><span class="block-email">
+                <%= maintenance.project.full_name %>
+              </span></td>
+            <td class="desc">
+              <%= maintenance.time %>
+            </td>
+            <td>
+              <% if (maintenance.maintenanceActions.length===0) { %>
+              Chưa bảo trì
+              <% } else { let allCompleted=maintenance.maintenanceActions.every(function(action) {
+              return action.status==1; }); %>
+              <% if(allCompleted) { %>
+              Đã hoàn thành
+              <% } else { %>
+              Chưa hoàn thành
+              <% } %>
+              <% } %>
+            </td>
             <td>
               <div class="table-data-feature">
                 <!-- Nút Edit để kích hoạt Modal -->
-                <button class="item edit-btn" data-toggle="tooltip" data-placement="top"
-                  title="Edit">
+                <button class="item edit-btn" data-toggle="tooltip" data-placement="top" title="Edit">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button class="item delete-btn" data-toggle="tooltip" data-placement="top"
-                  title="Delete">
+                <button class="item delete-btn" data-toggle="tooltip" data-placement="top" title="Delete">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </div>
