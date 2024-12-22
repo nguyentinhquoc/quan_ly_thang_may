@@ -218,7 +218,8 @@
             <a href class="col-sm-12">
               <div class="col-sm-12">
                 <% projectSteps.forEach(function(item, index) { %>
-                <a href="/client/task/<%= item.project.id %>" class="w-100 alert fade alert-simple alert-<%= item.status == 0 ? 'info' : 'success' %> alert-dismissible text-left font__size-16 font__weight-light brk-library-rendered rendered show">
+                <a href="/client/task/<%= item.project.id %>"
+                  class="w-100 alert fade alert-simple alert-<%= item.status == 0 ? 'info' : 'success' %> alert-dismissible text-left font__size-16 font__weight-light brk-library-rendered rendered show">
                   <span class="font__weight-semibold"><%= item.status == 0 ?
                     "Việc cần làm !" : "Việc đã làm" %> <br> </span>
                   <%= item.workflowStep.step.name %> <span style="opacity: 0.5;">( <%=

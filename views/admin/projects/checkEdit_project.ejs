@@ -1,31 +1,4 @@
 <%- include('../../layout/header') %>
-<style>
-  .infor-staff:hover {
-    opacity: 0.7;
-    background-color: rgb(45, 145, 227);
-    color: white;
-  }
-
-  .infor-staff {
-    border-bottom: 0.5px solid rgb(77, 211, 229);
-  }
-
-  #itemList {
-    display: none;
-  }
-
-  .imgStep img {
-    cursor: pointer;
-  }
-
-  .imgStep img:hover {
-    opacity: 0.2;
-  }
-
-  .imgStep img:active {
-    opacity: 0.2;
-  }
-</style>
 <h2 class=" m-b-30">Tạo mới dự án</h2>
 <form action="/project/<%= project.id %>?_method=Patch" method="POST" id="FormAdd">
   <div class="row">

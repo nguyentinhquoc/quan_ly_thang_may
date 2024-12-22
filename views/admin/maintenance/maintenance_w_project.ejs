@@ -1,220 +1,5 @@
 <%- include('../../layout/header') %>
 <style>
-  body {
-    background: #000e29;
-  }
-
-  .alert>.start-icon {
-    margin-right: 0;
-    min-width: 20px;
-    text-align: center;
-  }
-
-  .alert>.start-icon {
-    margin-right: 5px;
-  }
-
-  .greencross {
-    font-size: 18px;
-    color: #25ff0b;
-    text-shadow: none;
-  }
-
-  .alert-simple.alert-success {
-    border: 1px solid rgba(36, 241, 6, 0.46);
-    background-color: rgba(7, 149, 66, 0.12156862745098039);
-    box-shadow: 0px 0px 2px #259c08;
-    color: #0ad406;
-    text-shadow: 0.5px 1px #00040a;
-    transition: 0.5s;
-    cursor: pointer;
-  }
-
-  .alert-success:hover {
-    background-color: rgba(7, 149, 66, 0.35);
-    transition: 0.5s;
-  }
-
-  .alert-simple.alert-info {
-    border: 1px solid rgba(6, 44, 241, 0.46);
-    background-color: rgba(7, 73, 149, 0.12156862745098039);
-    box-shadow: 0px 0px 2px #0396ff;
-    color: #0396ff;
-    text-shadow: 0.5px 1px #00040a;
-    transition: 0.5s;
-    cursor: pointer;
-  }
-
-  .alert-info:hover {
-    background-color: rgba(7, 73, 149, 0.35);
-    transition: 0.5s;
-  }
-
-  .blue-cross {
-    font-size: 18px;
-    color: #0bd2ff;
-    text-shadow: none;
-  }
-
-  .alert-simple.alert-warning {
-    border: 1px solid rgba(241, 142, 6, 0.81);
-    background-color: rgba(220, 128, 1, 0.16);
-    box-shadow: 0px 0px 2px #ffb103;
-    color: #ffb103;
-    text-shadow: 0.5px 1px #00040a;
-    transition: 0.5s;
-    cursor: pointer;
-  }
-
-  .alert-warning:hover {
-    background-color: rgba(220, 128, 1, 0.33);
-    transition: 0.5s;
-  }
-
-  .warning {
-    font-size: 18px;
-    color: #ffb40b;
-    text-shadow: none;
-  }
-
-  .alert-simple.alert-danger {
-    border: 1px solid rgba(241, 6, 6, 0.81);
-    background-color: rgba(220, 17, 1, 0.16);
-    box-shadow: 0px 0px 2px #ff0303;
-    color: #ff0303;
-    text-shadow: 0.5px 1px #00040a;
-    transition: 0.5s;
-    cursor: pointer;
-  }
-
-  .alert-danger:hover {
-    background-color: rgba(220, 17, 1, 0.33);
-    transition: 0.5s;
-  }
-
-  .danger {
-    font-size: 18px;
-    color: #ff0303;
-    text-shadow: none;
-  }
-
-  .alert-simple.alert-primary {
-    border: 1px solid rgba(6, 241, 226, 0.81);
-    background-color: rgba(1, 204, 220, 0.16);
-    box-shadow: 0px 0px 2px #03fff5;
-    color: #03d0ff;
-    text-shadow: 0.5px 1px #00040a;
-    transition: 0.5s;
-    cursor: pointer;
-  }
-
-  .alert-primary:hover {
-    background-color: rgba(1, 204, 220, 0.33);
-    transition: 0.5s;
-  }
-
-  .alertprimary {
-    font-size: 18px;
-    color: #03d0ff;
-    text-shadow: none;
-  }
-
-  .square_box {
-    position: absolute;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-    border-top-left-radius: 45px;
-    opacity: 0.302;
-  }
-
-  .square_box.box_three {
-    background-image: -moz-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
-    background-image: -webkit-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
-    background-image: -ms-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
-    opacity: 0.059;
-    left: -80px;
-    top: -60px;
-    width: 500px;
-    height: 500px;
-    border-radius: 45px;
-  }
-
-  .square_box.box_four {
-    background-image: -moz-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
-    background-image: -webkit-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
-    background-image: -ms-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
-    opacity: 0.059;
-    left: 150px;
-    top: -25px;
-    width: 550px;
-    height: 550px;
-    border-radius: 45px;
-  }
-
-  .alert:before {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: calc(100% - 44px);
-    border-left: 1px solid;
-    border-right: 2px solid;
-    border-bottom-right-radius: 3px;
-    border-top-right-radius: 3px;
-    left: 0;
-    top: 50%;
-    transform: translate(0, -50%);
-    height: 20px;
-  }
-
-  .fa-times {
-    -webkit-animation: blink-1 2s infinite both;
-    animation: blink-1 2s infinite both;
-  }
-
-  /**
- * ----------------------------------------
- * animation blink-1
- * ----------------------------------------
- */
-  @-webkit-keyframes blink-1 {
-
-    0%,
-    50%,
-    100% {
-      opacity: 1;
-    }
-
-    25%,
-    75% {
-      opacity: 0;
-    }
-  }
-
-  @keyframes blink-1 {
-
-    0%,
-    50%,
-    100% {
-      opacity: 1;
-    }
-
-    25%,
-    75% {
-      opacity: 0;
-    }
-  }
-
-  .infor-staff:hover {
-    opacity: 0.7;
-    background-color: rgb(45, 145, 227);
-    color: white;
-  }
-
-  .infor-staff {
-    border-bottom: 0.5px solid rgb(77, 211, 229);
-  }
-
   #itemList {
     display: none;
   }
@@ -222,10 +7,11 @@
 <div class="row">
   <div class="col-md-12 card p-3">
     <div class="m-b-30">
-      <h2>Danh sách thời gian bảo trì</h2>
+      <h2>
+        Danh sách thời gian bảo trì
+      </h2>
       <p>Chủ dự án: <%= project.full_name %></p>
-      <button class="btn btn-primary mt-3 mb-3" id="add-maintenance">
-        + Thêm bảo trì
+      <button class="btn btn-primary mt-3 mb-3" id="add-maintenance">+ Thêm bảo trì
       </button>
       <table class="table">
         <tr>
@@ -240,18 +26,19 @@
           <td><%=item.time%></td>
           <td>
             <% item.maintenanceActions.forEach(function(action) { %>
-            <img src="/images/avatar/<%=  action.staff.avatar %>" alt height="30px" width="30px" style="border-radius: 50%" />
+            <img src="/images/avatar/<%=  action.staff.avatar %>" alt height="30px"
+              width="30px" style="border-radius: 50%;">
             <%= action.staff.full_name %>
-            <br />
-            <br />
+            <br>
+            <br>
             <% }) %>
-            <p class="btn btn-primary add-staff" idValue="<%=item.id%>">
-              + Thêm nhân viên
-            </p>
+            <p class="btn btn-primary add-staff" idValue="<%=item.id%>">+ Thêm nhân
+              viên</p>
           </td>
-          <td style="width: fit-content">
-            <p style="width: fit-content" id="maintenance-<%= index %>" class="alert fade alert-simple alert-<%= item.timeSuccess ? 'info' : 'success' %> alert-dismissible text-left font__size-16 font__weight-light brk-library-rendered rendered show">
-             <% if (item.maintenanceActions.length === 0) { %>
+          <td style="width: fit-content;">
+            <p style="width: fit-content;" id="maintenance-<%= index %>"
+              class="alert fade alert-simple alert-<%= item.timeSuccess ? 'info' : 'success' %> alert-dismissible text-left font__size-16 font__weight-light brk-library-rendered rendered show">
+              <span class="font__weight-semibold"><% if (item.maintenanceActions.length === 0) { %>
     Chưa bảo trì
 <% } else {
     let allCompleted = item.maintenanceActions.every(function(action) { return action.status == 1; });
@@ -262,33 +49,32 @@
         Chưa hoàn thành
     <% } %>
 <% } %>
-
+</span>
             </p>
           </td>
         </tr>
         <% }); %>
       </table>
-      <div class="row"></div>
+      <div class="row">
+      </div>
     </div>
   </div>
 </div>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const today = new Date()
-    const threeDaysFromNow = new Date(today)
-    threeDaysFromNow.setDate(today.getDate() + 3)
-    const maintenanceWProjects = JSON.parse(
-      '<%- JSON.stringify(maintenanceWProjects) %>',
-    )
+  document.addEventListener("DOMContentLoaded", function() {
+    const today = new Date();
+    const threeDaysFromNow = new Date(today);
+    threeDaysFromNow.setDate(today.getDate() + 3);
+    const maintenanceWProjects = JSON.parse('<%- JSON.stringify(maintenanceWProjects) %>')
     maintenanceWProjects.forEach(function(item, index) {
-      const itemDate = new Date(item.time)
-      const element = document.getElementById(`maintenance-${index}`)
+      const itemDate = new Date(item.time);
+      const element = document.getElementById(`maintenance-${index}`);
       if (itemDate >= today && itemDate <= threeDaysFromNow) {
-        element.classList.add('alert-warning')
+        element.classList.add("alert-warning");
       }
-    })
-  })
-  $(document).ready(function() {
+    });
+  });
+   $(document).ready(function() {
     $('.add-staff').click(function() {
       $('#newPositionModal').remove()
       var id = $(this).attr('idValue')
@@ -379,47 +165,45 @@
 
   function pushStaff(value, id) {
     if ($('#date-time').val() != '') {
-      $('.clickXN').prop('disabled', false)
-      $('#staffId').attr('value', id)
+      $('.clickXN').prop('disabled', false);
+      $('#staffId').attr('value', id);
     } else {
-      $('.clickXN').prop('disabled', true)
+      $('.clickXN').prop('disabled', true);
     }
-    document.getElementById('staff-search').value = value
-    document.getElementById('itemList').style.display = 'none'
+    document.getElementById('staff-search').value = value;
+    document.getElementById('itemList').style.display = "none";
   }
-
-  function onpenSubmit() {
-    $('.clickXN').prop('disabled', false)
-  }
-
+function onpenSubmit(){
+      $('.clickXN').prop('disabled', false);
+}
   function filterList() {
-    document.getElementById('itemList').style.display = 'block'
-    var input = document.getElementById('staff-search').value.toLowerCase()
-    var items = document.getElementById('itemList').getElementsByTagName('li')
-    var list = document.getElementById('itemList')
+    document.getElementById('itemList').style.display = "block"
+    var input = document.getElementById('staff-search').value.toLowerCase();
+    var items = document.getElementById('itemList').getElementsByTagName('li');
+    var list = document.getElementById('itemList');
     console.log(input)
     if (input) {
-      list.style.display = 'block'
+      list.style.display = "block";
     } else {
-      list.style.display = 'none'
+      list.style.display = "none";
     }
     for (var i = 0; i < items.length; i++) {
-      var itemText = items[i].textContent || items[i].innerText
-      var dataId = $(items[i]).attr('data-id')
-      var stepId = $(items[i]).attr('data-stepId')
+      var itemText = items[i].textContent || items[i].innerText;
+      var dataId = $(items[i]).attr('data-id');
+      var stepId = $(items[i]).attr('data-stepId');
       if (itemText.toLowerCase().includes(input)) {
-        items[i].style.display = ''
+        items[i].style.display = "";
       } else {
-        items[i].style.display = 'none'
+        items[i].style.display = "none";
       }
     }
   }
 
   function changeDate() {
     if ($('#date-time').val() != '') {
-      $('#staff-search').prop('disabled', false)
+      $('#staff-search').prop('disabled', false);
     } else {
-      $('#staff-search').prop('disabled', true)
+      $('#staff-search').prop('disabled', true);
     }
   }
 </script>
